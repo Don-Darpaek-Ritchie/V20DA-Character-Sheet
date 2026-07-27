@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1024, initial-scale=0.38, maximum-scale=3.0, user-scalable=yes">
   <title>V20 Dark Ages Scribe - Character Ledger</title>
   <style>
     :root {
@@ -49,13 +49,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 180px; /* Increased header height by 150% */
+      height: 180px;
     }
 
     header img.header-logo {
       height: 100%;
       width: auto;
-      object-fit: contain; /* Fits image height while preserving aspect ratio */
+      object-fit: contain;
     }
 
     /* Views */
@@ -114,8 +114,8 @@
 
     .char-card-actions {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 6px;
     }
 
     /* Buttons */
@@ -146,11 +146,12 @@
     }
 
     .btn-danger {
-      background-color: #4f1414;
+      background-color: #7c0b0b;
+      color: white;
     }
 
     .btn-danger:hover {
-      background-color: #701c1c;
+      background-color: #a31212;
     }
 
     .btn-shadow {
@@ -237,10 +238,11 @@
       border-bottom: 2px solid var(--border-color);
       margin-bottom: 20px;
       gap: 5px;
-      overflow-x: hidden;
+      overflow: hidden !important;
       flex-wrap: wrap;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      padding-bottom: 2px;
+      box-sizing: border-box;
+      overscroll-behavior: contain;
     }
 
     .tabs-nav::-webkit-scrollbar {
@@ -503,7 +505,7 @@
       font-size: 0.9rem;
       padding: 8px;
       resize: vertical;
-      min-height: 60px; /* Reduced to 3 lines height */
+      min-height: 60px;
       color: var(--text-dark);
     }
 
@@ -566,7 +568,7 @@
       background: rgba(255,255,255,0.3);
     }
 
-    /* Dropdown customization for perfect readability */
+    /* Dropdown customization */
     .discipline-select-container select option,
     .background-select-container select option,
     .path-select-container select option,
@@ -700,23 +702,53 @@
       color: #ffffff;
     }
 
-    /* Uniform compact font for all text boxes on screen */
     textarea {
       font-size: 0.82rem !important;
       line-height: 1.3 !important;
     }
 
-/* ==========================================
-       PRINTABILITY STYLESHEET
-       ========================================== */
-    /* Class applied temporarily during print prep so JS measures scrollHeight using print font sizes */
+    /* READ-ONLY STYLES */
+    .view-only input,
+    .view-only select,
+    .view-only textarea {
+      pointer-events: none !important;
+    }
+
+    .view-only .dot {
+      pointer-events: none !important;
+    }
+
+    .view-only input[type="checkbox"] {
+      pointer-events: none !important;
+    }
+
+    .view-only button:not(.btn-nav-view) {
+      display: none !important;
+    }
+
+    .view-only .delete-btn {
+      display: none !important;
+    }
+
+    .view-only .rituals-toggle-triangle,
+    .view-only .clan-caret,
+    .view-only .gen-caret,
+    .view-only .nature-caret,
+    .view-only .demeanor-caret,
+    .view-only .road-caret,
+    .view-only .path-caret,
+    .view-only .disc-caret,
+    .view-only .bg-caret {
+      display: none !important;
+    }
+
+    /* PRINT STYLES */
     body.print-mode textarea {
       font-size: 0.8rem !important;
       line-height: 1.3 !important;
       overflow: hidden !important;
     }
 
-    /* Targeted compact print formatting for dense Custom Path text boxes */
     body.print-mode .custom-path-desc,
     body.print-mode .custom-path-powers {
       font-size: 0.78rem !important;
@@ -724,7 +756,6 @@
     }
 
     @media print {
-      /* 1. Hide interface controls & interactive overlays */
       header,
       .dashboard-footer,
       .sheet-header-nav,
@@ -749,7 +780,6 @@
         display: none !important;
       }
 
-      /* Hide interactive chevron arrows inside card headers */
       #dynamic-grimoire-disciplines span,
       #dynamic-grimoire-paths span,
       #dynamic-page4-backgrounds span {
@@ -760,10 +790,9 @@
       .custom-path-powers {
         font-size: 0.78rem !important;
         line-height: 1.28 !important;
-        box-sizing: content-box !important; /* Prevents border padding from eating inner height */
+        box-sizing: content-box !important;
       }
 
-      /* 2. Page & Margin setup */
       @page {
         size: A4 portrait;
         margin: 15mm 12mm 15mm 12mm;
@@ -794,7 +823,6 @@
         color: #000000 !important;
       }
 
-      /* 3. Show all 5 tabs concurrently */
       .view {
         display: block !important;
       }
@@ -813,7 +841,6 @@
         margin-bottom: 20px !important;
       }
 
-      /* Force Tabs 2-5 to start cleanly on a fresh printed page */
       #tab-page-2,
       #tab-page-3,
       #tab-page-4,
@@ -823,7 +850,6 @@
         padding-top: 10px !important;
       }
 
-      /* 4. Prevent elements from being cut in half across pages */
       .trait,
       .info-group,
       .char-card,
@@ -849,7 +875,6 @@
         page-break-inside: avoid !important;
       }
 
-      /* 5. Text Field, Input & Dynamic Textarea Formatting */
       input[type="text"],
       input[type="number"],
       select {
@@ -866,7 +891,7 @@
         display: block !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        overflow: hidden !important; /* Eliminates all print scrollbars */
+        overflow: hidden !important;
         resize: none !important;
         background: transparent !important;
         border: 1px solid #8c7e6e !important;
@@ -878,7 +903,6 @@
         line-height: 1.3 !important;
       }
 
-      /* 6. Preserve Dot Ratings and Checkboxes */
       .dot {
         border: 1px solid #7c0b0b !important;
         -webkit-print-color-adjust: exact !important;
@@ -897,7 +921,6 @@
         accent-color: #7c0b0b !important;
       }
     }
-    
   </style>
 </head>
 <body>
@@ -913,8 +936,8 @@
       <div class="dashboard-header">
         <h2>Chronicle Ledger</h2>
         <div>
-          <button class="btn" onclick="createNewCharacter()">+ Create Character</button>
-          <button class="btn btn-secondary" onclick="document.getElementById('file-import').click()">Import JSON</button>
+          <button type="button" class="btn" onclick="createNewCharacter()">+ Create Character</button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-import').click()">Import JSON</button>
           <input type="file" id="file-import" accept=".json" onchange="importCharacter(event)">
         </div>
       </div>
@@ -943,21 +966,22 @@
         
         <div class="sheet-header-nav">
           <div>
-            <button class="btn btn-secondary btn-small" onclick="closeEditor()">&larr; Dashboard</button>
-            <button class="btn btn-small" onclick="triggerManualExport()">Export JSON</button>
-            <button class="btn btn-secondary btn-small" onclick="printCharacterSheet()">Printable</button>
+            <button type="button" class="btn btn-secondary btn-small btn-nav-view" onclick="closeEditor()">&larr; Dashboard</button>
+            <button type="button" class="btn btn-small btn-nav-view" onclick="triggerManualExport()">Export JSON</button>
+            <button type="button" class="btn btn-secondary btn-small btn-nav-view" onclick="printCharacterSheet()">Printable</button>
             <span id="sheet-npc-indicator" style="display: none; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-red); font-size: 0.95rem; font-weight: bold; margin-left: 15px; vertical-align: middle;">NPC</span>
+            <span id="sheet-readonly-indicator" style="display: none; text-transform: uppercase; letter-spacing: 1px; color: #8c7e6e; font-size: 0.95rem; font-weight: bold; margin-left: 15px; vertical-align: middle;">READ ONLY</span>
           </div>
           <span id="save-status" class="autosave-status">Draft Loaded</span>
         </div>
 
         <!-- Page Tabs -->
         <div class="tabs-nav">
-          <button class="tab-btn active" id="btn-page-1" onclick="switchTab('tab-page-1')">Page 1: Core</button>
-          <button class="tab-btn" id="btn-page-2" onclick="switchTab('tab-page-2')">Page 2: Grimoire</button>
-          <button class="tab-btn" id="btn-page-3" onclick="switchTab('tab-page-3')">Page 3: Traits & Combat</button>
-          <button class="tab-btn" id="btn-page-4" onclick="switchTab('tab-page-4')">Page 4: Possessions</button>
-          <button class="tab-btn" id="btn-page-5" onclick="switchTab('tab-page-5')">Page 5: History</button>
+          <button type="button" class="tab-btn btn-nav-view active" id="btn-page-1" onclick="switchTab('tab-page-1')">Page 1: Core</button>
+          <button type="button" class="tab-btn btn-nav-view" id="btn-page-2" onclick="switchTab('tab-page-2')">Page 2: Grimoire</button>
+          <button type="button" class="tab-btn btn-nav-view" id="btn-page-3" onclick="switchTab('tab-page-3')">Page 3: Traits & Combat</button>
+          <button type="button" class="tab-btn btn-nav-view" id="btn-page-4" onclick="switchTab('tab-page-4')">Page 4: Possessions</button>
+          <button type="button" class="tab-btn btn-nav-view" id="btn-page-5" onclick="switchTab('tab-page-5')">Page 5: History</button>
         </div>
 
         <!-- PAGE 1: CORE -->
@@ -1135,7 +1159,6 @@
             <div class="info-group"><label>Chronicle</label><input type="text" id="char-chronicle" oninput="queueAutoSave()"></div>
           </div>
 
-          <!-- Two side-by-side empty notes boxes with neat vertical whitespace -->
           <div class="two-col-grid" style="margin-top: 10px; margin-bottom: 25px; gap: 20px;">
             <div class="column">
               <textarea id="meta-notes-left" rows="3" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical;" oninput="queueAutoSave()"></textarea>
@@ -1170,10 +1193,9 @@
           <h2>Abilities</h2>
           <div class="three-col-grid">
             <div class="column">
-              <!-- Right-aligned + Add button on talents header -->
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 3px; margin-bottom: 10px;">
                 <span style="text-transform: uppercase; letter-spacing: 1px; color: var(--accent-red); font-size: 0.95rem; font-weight: bold;">Talents</span>
-                <button class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-talents-list', 'talent'); return false;">+ Add</button>
+                <button type="button" class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-talents-list', 'talent'); return false;">+ Add</button>
               </div>
               <div class="trait" data-id="alertness" data-min="0" data-max="6" data-default="0"><label>Alertness</label><div class="dots-container"></div></div>
               <div class="trait" data-id="athletics" data-min="0" data-max="6" data-default="0"><label>Athletics</label><div class="dots-container"></div></div>
@@ -1186,19 +1208,16 @@
               <div class="trait" data-id="legerdemain" data-min="0" data-max="6" data-default="0"><label>Legerdemain</label><div class="dots-container"></div></div>
               <div class="trait" data-id="subterfuge" data-min="0" data-max="6" data-default="0"><label>Subterfuge</label><div class="dots-container"></div></div>
               
-              <!-- Custom Abilities placeholder -->
               <div id="custom-talents-list"></div>
 
-              <!-- Specialties subheader & text box -->
               <div style="text-align: center; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: #5a5045; margin-top: 15px; margin-bottom: 4px;">Specialties</div>
               <textarea id="specialties-talents" rows="3" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical; margin-bottom: 15px;" oninput="queueAutoSave()"></textarea>
             </div>
             
             <div class="column">
-              <!-- Right-aligned + Add button on skills header -->
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 3px; margin-bottom: 10px;">
                 <span style="text-transform: uppercase; letter-spacing: 1px; color: var(--accent-red); font-size: 0.95rem; font-weight: bold;">Skills</span>
-                <button class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-skills-list', 'skill'); return false;">+ Add</button>
+                <button type="button" class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-skills-list', 'skill'); return false;">+ Add</button>
               </div>
               <div class="trait" data-id="animal_ken" data-min="0" data-max="6" data-default="0"><label>Animal Ken</label><div class="dots-container"></div></div>
               <div class="trait" data-id="archery" data-min="0" data-max="6" data-default="0"><label>Archery</label><div class="dots-container"></div></div>
@@ -1211,19 +1230,16 @@
               <div class="trait" data-id="stealth" data-min="0" data-max="6" data-default="0"><label>Stealth</label><div class="dots-container"></div></div>
               <div class="trait" data-id="survival" data-min="0" data-max="6" data-default="0"><label>Survival</label><div class="dots-container"></div></div>
               
-              <!-- Custom Abilities placeholder -->
               <div id="custom-skills-list"></div>
 
-              <!-- Specialties subheader & text box -->
               <div style="text-align: center; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: #5a5045; margin-top: 15px; margin-bottom: 4px;">Specialties</div>
               <textarea id="specialties-skills" rows="3" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical; margin-bottom: 15px;" oninput="queueAutoSave()"></textarea>
             </div>
             
             <div class="column">
-              <!-- Right-aligned + Add button on knowledges header -->
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 3px; margin-bottom: 10px;">
                 <span style="text-transform: uppercase; letter-spacing: 1px; color: var(--accent-red); font-size: 0.95rem; font-weight: bold;">Knowledges</span>
-                <button class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-knowledges-list', 'knowledge'); return false;">+ Add</button>
+                <button type="button" class="btn btn-secondary btn-small" onclick="addCustomAbilityRow('custom-knowledges-list', 'knowledge'); return false;">+ Add</button>
               </div>
               <div class="trait" data-id="academics" data-min="0" data-max="6" data-default="0"><label>Academics</label><div class="dots-container"></div></div>
               <div class="trait" data-id="enigmas" data-min="0" data-max="6" data-default="0"><label>Enigmas</label><div class="dots-container"></div></div>
@@ -1236,10 +1252,8 @@
               <div class="trait" data-id="seneschal" data-min="0" data-max="6" data-default="0"><label>Seneschal</label><div class="dots-container"></div></div>
               <div class="trait" data-id="theology" data-min="0" data-max="6" data-default="0"><label>Theology</label><div class="dots-container"></div></div>
               
-              <!-- Custom Abilities placeholder -->
               <div id="custom-knowledges-list"></div>
 
-              <!-- Specialties subheader & text box -->
               <div style="text-align: center; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: #5a5045; margin-top: 15px; margin-bottom: 4px;">Specialties</div>
               <textarea id="specialties-knowledges" rows="3" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical; margin-bottom: 15px;" oninput="queueAutoSave()"></textarea>
             </div>
@@ -1250,12 +1264,12 @@
             <div class="column">
               <h3 class="column-header">Disciplines</h3>
               <div id="disciplines-list" class="dynamic-list"></div>
-              <button class="btn btn-secondary btn-small" style="align-self: flex-start;" onclick="addDynamicRow('disciplines-list', 'discipline')">+ Add Discipline</button>
+              <button type="button" class="btn btn-secondary btn-small" style="align-self: flex-start;" onclick="addDynamicRow('disciplines-list', 'discipline')">+ Add Discipline</button>
             </div>
             <div class="column">
               <h3 class="column-header">Backgrounds</h3>
               <div id="backgrounds-list" class="dynamic-list"></div>
-              <button class="btn btn-secondary btn-small" style="align-self: flex-start;" onclick="addDynamicRow('backgrounds-list', 'background')">+ Add Background</button>
+              <button type="button" class="btn btn-secondary btn-small" style="align-self: flex-start;" onclick="addDynamicRow('backgrounds-list', 'background')">+ Add Background</button>
             </div>
             <div class="column">
               <h3 class="column-header">Virtues</h3>
@@ -1388,19 +1402,16 @@
           <!-- Road of Enlightenment Section -->
           <h2>Road of Enlightenment</h2>
           <div class="road-enlightenment-grid">
-            <!-- Row 1: Column 1 Alternative Name -->
             <div class="text-area-group" style="margin-top: 0;">
               <label>Alternative Name</label>
               <textarea id="road-alt-name" rows="1" style="resize: none; height: 1.8rem; min-height: 1.8rem; line-height: 1.2; padding: 3px 8px; box-sizing: border-box;" oninput="queueAutoSave()"></textarea>
             </div>
 
-            <!-- Row 1: Columns 2-4 Spanning Text Box -->
             <div class="text-area-group" style="margin-top: 0; grid-column: 2 / 5;">
               <label style="visibility: hidden;">&nbsp;</label>
               <textarea id="road-alt-name-extra" rows="1" style="resize: none; height: 1.8rem; min-height: 1.8rem; line-height: 1.2; padding: 3px 8px; box-sizing: border-box;" oninput="queueAutoSave()"></textarea>
             </div>
 
-            <!-- Row 2: Column 1 Ethics -->
             <div class="column">
               <div class="text-area-group" style="margin-top: 0;">
                 <label>Ethics</label>
@@ -1408,7 +1419,6 @@
               </div>
             </div>
 
-            <!-- Row 2: Column 2 (Rating 10-1) -->
             <div class="column" style="display: flex; flex-direction: column;">
               <div class="text-area-group" style="margin-top: 0;">
                 <label style="visibility: hidden;">&nbsp;</label>
@@ -1425,7 +1435,6 @@
               </div>
             </div>
 
-            <!-- Row 2: Column 3 Minimum Wrongdoing -->
             <div class="column" style="display: flex; flex-direction: column;">
               <div class="text-area-group" style="margin-top: 0;">
                 <label>Minimum Wrongdoing</label>
@@ -1442,7 +1451,6 @@
               </div>
             </div>
 
-            <!-- Row 2: Column 4 Rationale -->
             <div class="column" style="display: flex; flex-direction: column;">
               <div class="text-area-group" style="margin-top: 0;">
                 <label>Rationale</label>
@@ -1465,20 +1473,17 @@
         <div id="tab-page-2" class="tab-content">
           <h2>Grimoire Ledger</h2>
           
-          <!-- Dynamic Discipline Descriptions Matched from Page 1 -->
           <div id="dynamic-grimoire-disciplines" style="margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; color: var(--text-dark);">
-            <!-- Populated via JS -->
           </div>
 
-          <!-- Parent Discipline Filter Buttons Left-Aligned to Paths of Sorcery Column -->
           <div id="parent-discipline-filters" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; align-self: flex-start;">
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Thaumaturgy')">Thaumaturgy</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Necromancy')">Necromancy</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Dark Thaumaturgy')">Dark Thaumaturgy</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Koldunic Sorcery')">Koldunic Sorcery</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Akhu')">Akhu</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Dur-An-Ki')">Dur-An-Ki</button>
-            <button class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Sadhana')">Sadhana</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Thaumaturgy')">Thaumaturgy</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Necromancy')">Necromancy</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Dark Thaumaturgy')">Dark Thaumaturgy</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Koldunic Sorcery')">Koldunic Sorcery</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Akhu')">Akhu</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Dur-An-Ki')">Dur-An-Ki</button>
+            <button type="button" class="btn btn-secondary btn-small path-filter-btn" onclick="setParentFilter(this, 'Sadhana')">Sadhana</button>
           </div>
 
           <div class="two-col-grid">
@@ -1487,11 +1492,9 @@
                 <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent-red); text-transform: uppercase;">Paths of Sorcery</h3>
                 <div id="paths-list" class="dynamic-list"></div>
               </div>
-              <button class="btn btn-secondary btn-small" style="width: 100%; box-sizing: border-box;" onclick="addPathRow('paths-list')">+ Add Path</button>
+              <button type="button" class="btn btn-secondary btn-small" style="width: 100%; box-sizing: border-box;" onclick="addPathRow('paths-list')">+ Add Path</button>
 
-              <!-- Dynamic Path Cards Container (Confined to Column 1) -->
               <div id="dynamic-grimoire-paths" style="margin-top: 15px; width: 100%; box-sizing: border-box;">
-                <!-- Populated via JS -->
               </div>
             </div>
 
@@ -1503,7 +1506,7 @@
                 </div>
                 <div id="rituals-list" class="dynamic-list"></div>
               </div>
-              <button class="btn btn-secondary btn-small" style="width: 100%; box-sizing: border-box;" onclick="addRitualRow('rituals-list')">+ Add Ritual</button>
+              <button type="button" class="btn btn-secondary btn-small" style="width: 100%; box-sizing: border-box;" onclick="addRitualRow('rituals-list')">+ Add Ritual</button>
             </div>
           </div>
           <div class="text-area-group" style="margin-top: 25px;">
@@ -1530,7 +1533,7 @@
             </thead>
             <tbody></tbody>
           </table>
-          <button class="btn btn-secondary btn-small" style="margin-top: 10px;" onclick="addCombatAttackRow()">+ Add Attack</button>
+          <button type="button" class="btn btn-secondary btn-small" style="margin-top: 10px;" onclick="addCombatAttackRow()">+ Add Attack</button>
 
           <div class="two-col-grid" style="margin-top: 20px;">
             <div class="column">
@@ -1543,7 +1546,7 @@
             <div class="column">
               <h3>Derangements</h3>
               <div id="derangements-list" class="dynamic-list"></div>
-              <button class="btn btn-secondary btn-small" onclick="addDerangementRow('derangements-list')">+ Add Derangement</button>
+              <button type="button" class="btn btn-secondary btn-small" onclick="addDerangementRow('derangements-list')">+ Add Derangement</button>
 
               <h3 style="margin-top: 20px;">Experience</h3>
               <div class="two-col-grid">
@@ -1558,18 +1561,18 @@
             <div class="column">
               <h3>Merits</h3>
               <div id="merits-list" class="dynamic-list"></div>
-              <button class="btn btn-secondary btn-small" onclick="addCustomRow('merits-list', 'merit')">+ Add Merit</button>
+              <button type="button" class="btn btn-secondary btn-small" onclick="addCustomRow('merits-list', 'merit')">+ Add Merit</button>
             </div>
             <div class="column">
               <h3>Flaws</h3>
               <div id="flaws-list" class="dynamic-list"></div>
-              <button class="btn btn-secondary btn-small" onclick="addCustomRow('flaws-list', 'flaw')">+ Add Flaw</button>
+              <button type="button" class="btn btn-secondary btn-small" onclick="addCustomRow('flaws-list', 'flaw')">+ Add Flaw</button>
             </div>
           </div>
 
           <h2>Other Traits (6 Dots)</h2>
           <div id="other-traits-list" class="dynamic-list"></div>
-          <button class="btn btn-secondary btn-small" onclick="addOtherTraitRow('other-traits-list')">+ Add Other Trait</button>
+          <button type="button" class="btn btn-secondary btn-small" onclick="addOtherTraitRow('other-traits-list')">+ Add Other Trait</button>
         </div>
 
         <!-- PAGE 4: POSSESSIONS -->
@@ -1601,12 +1604,10 @@
             <div class="text-area-group"><label>Description</label><textarea id="haven-desc" oninput="queueAutoSave()"></textarea></div>
           </div>
 
-          <!-- Bottom divider on page 4 with exact whitespace specifications -->
           <div style="border-bottom: 1px solid var(--border-color); margin-top: 35px; margin-bottom: 35px; width: 100%;"></div>
 
           <h2>Background Ledger</h2>
           <div id="dynamic-page4-backgrounds" class="two-col-grid" style="margin-top: 15px; color: var(--text-dark);">
-            <!-- Populated via JS -->
           </div>
         </div>
 
@@ -1639,16 +1640,15 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                   <label style="margin-bottom: 0;">Character Description</label>
                   <div style="display: flex; align-items: center; gap: 10px;">
-                    <button class="btn btn-secondary btn-small" onclick="document.getElementById('vis-image-file').click(); return false;">Upload a .WEBP Image</button>
+                    <button type="button" class="btn btn-secondary btn-small" onclick="document.getElementById('vis-image-file').click(); return false;">Upload an Image</button>
                     <input type="file" id="vis-image-file" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                    <button class="delete-btn" id="vis-image-delete" onclick="deleteCharacterImage(); return false;" style="display: none; font-size: 1.2rem; line-height: 1; border: none; background: none; padding: 0;">&times;</button>
+                    <button type="button" class="delete-btn" id="vis-image-delete" onclick="deleteCharacterImage(); return false;" style="display: none; font-size: 1.2rem; line-height: 1; border: none; background: none; padding: 0;">&times;</button>
                   </div>
                 </div>
 
-                <!-- 2:3 Portrait Wrapper with Description Overlay capability -->
                 <div id="image-container" style="position: relative; width: 100%; aspect-ratio: 2/3; max-width: 320px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.4); overflow: hidden;">
                   <textarea id="vis-sketch" style="width: 100%; height: 100%; border: none; background: transparent; resize: none; font-family: inherit; font-size: 0.9rem; padding: 8px; box-sizing: border-box; color: var(--text-dark);" placeholder="Physical description notes..." oninput="queueAutoSave()"></textarea>
-                  <img id="vis-image-preview" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; pointer-events: none;" alt="Portrait">
+                  <img id="vis-image-preview" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; pointer-events: none;" alt="Portrait" onerror="this.style.display='none'; const dBtn = document.getElementById('vis-image-delete'); if(dBtn) dBtn.style.display='none';">
                 </div>
               </div>
             </div>
@@ -1661,7 +1661,7 @@
 
   <!-- STORYTELLERS VAULT LEGAL VIEW -->
   <div id="sv-legal-view" class="legal-view">
-    <button class="legal-back-btn" onclick="hideLegalViews()">&larr; Back</button>
+    <button type="button" class="legal-back-btn" onclick="hideLegalViews()">&larr; Back</button>
     <div class="legal-content">
 World of Darkness, Vampire: The Masquerade, Vampire: The Dark Ages, Victorian Age: Vampire, Werewolf: The Apocalypse, Werewolf: The Wild West, Mage: The Ascension, Mage: The Sorcerers Crusade, Wraith: The Oblivion, Wraith: The Great War, Changeling: The Dreaming, Hunter: The Reckoning, Demon: The Fallen, Mummy: The Resurrection, Orpheus, Exalted, Chronicles of Darkness, Vampire:The Requiem, Werewolf: The Forsaken, Mage: The Awakening, Changeling: The Lost, Hunter: The Vigil, Giest: The Sin Eaters, Demon: The Descent, Mummy: The Curse, Beast: The Primordial, Promethean: The Created, World of Darkness, Storyteller System™, Storytelling System™, and Storytellers Vault™ and their respective logos, icons and symbols are trademarks or registered trademarks of Paradox Interactive AB. All rights reserved.
 
@@ -1673,7 +1673,7 @@ This work contains material that is copyright of Paradox Interactive AB. Such ma
 
   <!-- DARK PACK LEGAL VIEW -->
   <div id="dp-legal-view" class="legal-view">
-    <button class="legal-back-btn" onclick="hideLegalViews()">&larr; Back</button>
+    <button type="button" class="legal-back-btn" onclick="hideLegalViews()">&larr; Back</button>
     <div class="legal-content">
 Finally, include a notice which informs users that Your Material is not official World of Darkness material. (Editor's Note: This web application in not official World of Darkness material.)
 
@@ -1711,23 +1711,21 @@ Nothing in this agreement limits our liability to you in the event of death or p
   </div>
 
   <script>
-    /*
-      ================================================================================
-      GOOGLE SHEETS SYNC SYSTEM (Deploy as web app using code below)
-      ================================================================================
-      Replace the API_URL below with your deployed Google Web App URL.
-      If left as "YOUR_DEPLOYED_URL_HERE", the app falls back entirely to LocalStorage.
-    */
+
+// Put your GOOGLE Sheet Web App exec URL below
+    
     const API_URL = "YOUR_DEPLOYED_URL_HERE";
 
     let activeCharacterId = null;
     let saveTimeout = null;
     let dynamicRowId = 0;
-    let isLoadingSheet = false; // Flag to prevent auto-saves while sheet DOM is initializing
-    let activeParentFilter = null; // Filter state for Paths of Sorcery
-    const collapsedDisciplines = {}; // Persistent Grimoire minimizes
-    const collapsedBackgrounds = {};  // Persistent Page 4 Background minimizes
-    const collapsedPaths = {};        // Persistent Path Card minimizes
+    let isLoadingSheet = false;
+    let activeParentFilter = null;
+    window.activeImageName = '';
+    let isUploadingImage = false;
+    const collapsedDisciplines = {};
+    const collapsedBackgrounds = {};
+    const collapsedPaths = {};
 
     // Complete Database of Blood Sorcery Paths
     const pathsDatabase = {
@@ -2338,7 +2336,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     };
 
-    // Official Sourcebook Backgrounds Database
+    // Backgrounds Database
+    
     const backgroundsDatabase = {
       "Allies": {
         description: "Allies are mortals who support you willingly, without coercion. They are not always available to offer assistance; they have their own concerns as well, but they could provide indirect access to their own Backgrounds such as Contacts, Influence, or Resources. However, nothing is free. If you draw on favors from your friends, they may ask for a favor in return. Allies dots may be pooled among a coterie of characters.",
@@ -2562,8 +2561,320 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     };
 
-    // Common Ethics Templates for Path Variations
-    const beastBaseEthics = [
+// Clan & Bloodline Database
+    const clanDatabase = {
+      "Assamite (Sorceror Caste)": {
+        disciplines: ["Clan Sorcery", "Auspex", "Celerity"],
+        weakness: "Sorcerers have a difficult time hiding their arcane nature. All mystical attempts to determine magic use on or around the character are made at a -2 difficulty and are considered two levels higher for the purposes of opposed powers and rolls."
+      },
+      "Assamite (Vizier Caste)": {
+        disciplines: ["Auspex", "Presence", "Quietus Hematus"],
+        weakness: "Assamite viziers are rigorous to a fault. Each character has an obsession with her highest intellectual or creative Ability, which acts as a derangement. While the derangement is active, the character’s aura glows in a way as to provide hints to the vizier’s true Nature, as well as the object of her obsession, visible to Auspex users. Additionally, Assamites darken with age. This is a slow process. But over the centuries, Assamite skin blackens to a matte onyx."
+      },
+      "Assamite (Warrior Caste)": {
+        disciplines: ["Celerity", "Obfuscate", "Quietus Cruscitus"],
+        weakness: "Warriors are marked with their tradition of diablerie. Warrior Assamites always confirm as positive for diablerie whenever scrutinized with supernatural powers, even if the character has never tasted the blood of another Cainite."
+      },
+      "Brujah": {
+        disciplines: ["Celerity", "Potence", "Presence"],
+        weakness: "The passion that inspires the Brujah from night to night can send them into fits of rage if left unchecked. The difficulties of rolls to resist or guide frenzy are two higher than normal. Additionally, a Brujah may never spend Willpower to avoid frenzy. However, they may spend a point of Willpower to end a frenzy that has already begun."
+      },
+      "Cappadocians": {
+        disciplines: ["Auspex", "Fortitude", "Necromancy"],
+        weakness: "The Cappadocian affinity for death is marked indelibly on the visage of its clan members. All Cappadocians appear ashy and corpselike, and are unable to affect the appearance of life like other vampires by spending vitae. This condition becomes more pronounced as the Necromancer ages, with the eldest Cappadocians appearing as mummified corpses. This grim visage presents the Cappadocian with a +2 difficulty on any Social rolls that would be hindered by a corpselike appearance."
+      },
+      "Followers of Set": {
+        disciplines: ["Obfuscate", "Presence", "Serpentis"],
+        weakness: "The enmity between Set and Horus, sun god and son of Set’s hated brother Osiris, is eternal. The Followers of Set carry Horus’ curse more heavily than other vampires and take twice the amount of aggravated damage from any exposure to sunlight than members of other clans."
+      },
+      "Gangrel": {
+        disciplines: ["Animalism", "Fortitude", "Protean"],
+        weakness: "When a Gangrel frenzies, her Beast rises to the surface, and the wildness in her blood finds purchase in her flesh and in her mind. She may develop a small physical or mental animal trait that suits either local vampire mythology, or a predatory or scavenging animal in the region. Examples include overgrown eyebrows, patches of fur, or an hour of torpor after feeding. The net result is that the trait should give them a +1 difficulty penalty and one automatic failure on some relevant dice pool. The trait and the penalty remain until the player accepts the automatic failure."
+      },
+      "Lasombra": {
+        disciplines: ["Dominate", "Obtenebration", "Potence"],
+        weakness: "Lasombra cannot be seen in any sort of reflective surface, which makes it difficult to conceal their supernatural nature from mortals. Additionally, members of the Clan of Shadows cannot abide the presence of bright light; they take an additional level of aggravated damage from any exposure to sunlight."
+      },
+      "Malkavians": {
+        disciplines: ["Auspex", "Dementation", "Obfuscate"],
+        weakness: "Malkav’s children each suffer from an imbalance of the humors that’ll never truly fade. At character creation, choose one derangement. This derangement can never be cured, and a Malkavian may only use Willpower to ignore it for a turn at a time. Even powerful gifts of the blood such as Valeren may only push it aside for a night. After such an effort, however, the derangement comes back in full force. For a week thereafter, the Malkavian cannot use Willpower to resist her derangement at all."
+      },
+      "Nosferatu": {
+        disciplines: ["Animalism", "Obfuscate", "Potence"],
+        weakness: "All Nosferatu wear the blood’s corruption on their face. As a result, all Nosferatu start with zero dots in Appearance, and this cannot be raised. Because of this, they automatically fail any first impression roll (except to intimidate) and have difficulty with many social interactions."
+      },
+      "Ravnos": {
+        disciplines: ["Animalism", "Chimerstry", "Fortitude"],
+        weakness: "While the Ravnos are masters of changing the reality around them, they have a harder time changing their own fundamental reality. All Ravnos have a key personality trait, chosen at character creation, which they are incapable of resisting if the opportunity to express itself presents itself. This can be some kind of virtuous act, such as defending the weak, or something more sinister, such as taking advantage of someone in a lesser position. Often the trait is tied to the jati the Ravnos belongs to. When presented with the opportunity to indulge in her virtue or vice, she does so unless the player succeeds on a Self-Control or Instinct roll (difficulty 6)."
+      },
+      "Toreador": {
+        disciplines: ["Auspex", "Celerity", "Presence"],
+        weakness: "The Toreador has the shortest attention span of all Cainites. Once struck by beauty, it’s as if Cupid’s dart pierced them. If they encounter beauty (Storyteller and player work together to determine appropriate triggers), they must roll Self-Control or Instinct (difficulty 5). If they fail, the daydream of their senses continues until the scene concludes or object departs."
+      },
+      "Tremere": {
+        disciplines: ["Auspex", "Dominate", "Thaumaturgy"],
+        weakness: "The Tremere’s rush to exploit the powers of vampiric blood comes with its own disadvantages: they are particularly vulnerable to blood bonds when they drink the blood of other Damned. The first draught of blood that a Tremere consumes counts as two for the purposes of establishing a bond, meaning that the next drink will complete it."
+      },
+      "Tzimisce": {
+        disciplines: ["Animalism", "Auspex", "Vicissitude"],
+        weakness: "Tzimisce draw their mandate to rule from the very land itself, but this comes with a price. A Tzimisce must rest with at least two handfuls of native soil — that is, soil from a place of importance to them, usually their home or their grave. For each day of rest without it, halve all dice pools (round down), cumulatively, until the pool reaches one die. A full day of proper rest with her native soil will restore the dice pools to their normal value."
+      },
+      "Ventrue": {
+        disciplines: ["Dominate", "Fortitude", "Presence"],
+        weakness: "Rarefied taste has its cost, as the Ventrue are restricted to one particular type of mortal (merchants, French, Catholics, small children). This choice severely limits their feeding pool. They can consume mortal blood outside of this selected preference, but it does not forestall the Beast or provide nourishment."
+      },
+      "Ahrimanes": {
+        disciplines: ["Animalism", "Potence", "Spiritus"],
+        weakness: "An Ahrimane’s blood resists the ties of bondage. She can create neither blood bonds nor ghouls."
+      },
+      "Anda": {
+        disciplines: ["Animalism", "Fortitude", "Protean"],
+        weakness: "The Anda suffer from a kind of loneliness that comes with being cut off from the vast majority of their people, and most especially, from the warm waking face of Tengri. For one hour after sunset, and for the last hour before sunrise, their dice pools are limited by their Road rating as if they were acting during the day."
+      },
+      "Baali": {
+        disciplines: ["Daimonion", "Presence", "Obfuscate"],
+        weakness: "The Torment in the blood of Caine recoils from religious symbols, and the Baali are particularly vulnerable. Unless those religious symbols have lain abandoned for half a century, any individual brandishing a religious symbol at a Devil is considered to have a True Faith rating one higher than their actual rating."
+      },
+      "Bonsam": {
+        disciplines: ["Abombwe", "Obfuscate", "Potence"],
+        weakness: "Possessed by a darkness before time, a Bonsam inspires primordial terror in mortals. Mortals who fail at a Courage roll (difficulty 7) when seeing a Bonsam in his true form either flee in terror or gather up weapons to kill the monster, depending on the size of the mortal group and the Nature of its leader. This fear can be overcome however, and a mortal who has succeeded at this check need not roll again upon meeting the same Bonsam (or at Storyteller’s discretion, any Bonsam)."
+      },
+      "Children of Osiris": {
+        disciplines: ["Bardo"],
+        weakness: "Original clan’s weakness. In addition, the initiation rite to enter the sect renders a new applicant’s blood inert and he is no longer able to Embrace."
+      },
+      "Danava": {
+        disciplines: ["Dominate", "Fortitude", "Thaumaturgy"],
+        weakness: "Like their cousins to the west, the Danava have particularly refined palates when it comes to those they choose as prey, but animals such as cows or pigs are taboo in the extreme. Danava receive no sustenance from animal blood. Members of the bloodline first ritually offer their victims to their gods as a matter of course, but such observances need not be strict or long lasting. Without a ritual of at least thirty seconds, blood offers half sustenance."
+      },
+      "Gargoyles": {
+        disciplines: ["Flight", "Fortitude", "Potence"],
+        weakness: "Gargoyles are social creatures, while an individual may operate singly without impairment, should a Gargoyle ever truly find herself alone in the world — without master, mate, childer, or friend — her dice pools are halved until the condition is rectified. Working in conjunction with a complete stranger can alleviate these penalties on a scene-by-scene basis, but only a mutually acknowledged relationship can restore the Gargoyle fully. Additionally, Gargoyles are particularly susceptible to mind control and domination; their Willpower is always considered two less when resisting such powers."
+      },
+      "Giovani": {
+        disciplines: ["Auspex", "Fortitude", "Necromancy"],
+        weakness: "Like other members of the Cappadocian clan, the Giovani have an ashen quality to their skin which makes humans eerily aware of their otherness. The few bloodline members closest to Augustus himself are perfectly able to appear as if blood was still pumping through their veins, but their Kiss is excruciatingly painful. Some believe the horrors he saw as a mortal man carried through his blood, but this weakness doesn’t seem to have a clear pattern or cause."
+      },
+      "Impundulu": {
+        disciplines: ["Necromancy", "Fortitude", "Presence"],
+        weakness: "An Impundulu only gains sustenance from the Bomkazi. As the witches are independently powerful and their relationship with the Impundulu is voluntary, the Impundulu does well to treat any Bomkazi as an equal ally as opposed to a retainer, with all the complications this might entail."
+      },
+      "Kiasyd": {
+        disciplines: ["Mytherceria"],
+        weakness: "Due to her mark of the fae, the difficulty of rolls to recognize the Kiasyd as otherworldly decrease by one (more if her mark is particularly obvious). Additionally, her fae heritage makes the Kiasyd vulnerable to cold iron. Not only do weapons made from cold iron inflict aggravated damage to her, but such damage triggers an immediate roll to avoid either frenzy or Rötschreck as befitting her Nature."
+      },
+      "Lamiae": {
+        disciplines: ["Fortitude", "Necromancy", "Potence"],
+        weakness: "The Lamiae are not touched by death in the way that the Cappadocians are. No, the Lilin say, they are blessed by that great and terrible Mother that lies beyond death. Her merciless and terrible love brings ruin to those who are weak enough to not withstand it. The bite of the Lamiae brings the Seed of Lilith, a wasting plague that rot away the members of a still-living body until eventually killing mortal victims. The plague causes one lethal damage per night (with a nightly Stamina roll, difficulty 7 to resist) for a fortnight. Any Cainite that consumes Lamia blood will also be carriers of the disease until all Lamia blood is purged from their bodies."
+      },
+      "Lhiannan": {
+        disciplines: ["Animalism", "Presence", "Ogham"],
+        weakness: "The rumors surrounding the Lhiannan and their desperation likely formed from their inherent weakness. Every Lhiannan, from the moment of the Embrace, feels the shard of spirit within her. The sire feels the weakness as she shares her own spirit with her newly-made childe. When a Lhiannan Embraces, her Generation raises by one at the conclusion of the Embrace. For example, if a Ninth Generation Lhiannan Embraces a childe, her blood becomes Tenth Generation blood. The newly-Embraced childe also carries Tenth Generation blood. The sire becomes a generational sibling with her new childe. The eldest known Lhiannan wonder how the bloodline propagated in spite of this flaw, but if any have the answer, they’re not sharing. Lhiannan draw strength from nature, and their power diminishes within urban areas. For each week a Lhiannan spends outside of the wild, her dice pools are reduced by one. These penalties are cumulative, but can never reduce a dice pool lower than her unmodified Stamina. The Lhiannan must sleep a full day in the wilds to remove all the penalties upon waking."
+      },
+      "Nagaraja": {
+        disciplines: ["Auspex", "Dominate", "Necromancy"],
+        weakness: "As the preta of myth, the Flesh-Eaters must consume fresh raw meat to maintain their strength, marking them as untouchable and precluding sustenance without murder. This meat must come from living humans or fresh corpses. They suffer from the Ragged Bite and Flesh Eater Flaws with no recompense. Nagaraja teeth come in sharp rows, and can’t be retracted, but inflict +2 dice of damage in combat when biting."
+      },
+      "Niktuku": {
+        disciplines: ["Auspex", "Celerity", "Potence"],
+        weakness: "The Hungry suffer from an inability to gain sustenance from kine blood. For every three blood points they drain, they gain only one to their system. Cainite vitae nourishes them normally. Additionally, age is difficult and transforming on the bloodline. For every hundred years since their Embrace, the Hungry lose a point from their Appearance Attribute. That dot does not vanish; instead, it moves to any one Physical Attribute that can bear the increase. They grow slowly but decidedly bent, twisted, and deadly, slowly aging grotesques that blame the Nosferatu for their condition."
+      },
+      "Ramanga": {
+        disciplines: ["Obtenebration", "Obfuscate", "Presence"],
+        weakness: "A Ramanga’s use of Presence and Aizina (Obtenebration), when impacting others, is at +1 difficulty normally. However, if she has a physical piece of the victim, this penalty is negated."
+      },
+      "Salubri (Healer Caste)": {
+        disciplines: ["Auspex", "Presence", "Valeren - Healer"],
+        weakness: "If a Salubri learns but one dot of Valeren, he manifests the Discipline’s signature third eye. Salubri Healers must succeed on a Willpower roll (difficulty 6) if they attempt to feed on the unwilling; if they fail, they must find a willing vessel or suffer a two-die penalty on all rolls for the remainder of the night. Victims enthralled by Presence count as willing vessels."
+      },
+      "Salubri (Warrior Caste)": {
+        disciplines: ["Auspex", "Fortitude", "Valeren - Warrior"],
+        weakness: "If a Salubri learns but one dot of Valeren, she manifests the Discipline’s signature third eye. Salubri Warriors must test their strength and establish martial dominance; they must succeed on a Willpower roll (difficulty 6) if they attempt to feed on someone whom they have not vanquished in a fight, or suffer a two-die penalty on all rolls for the rest of the night. This may be defined as a duel to the death, or a simple brawl to Incapacitated. A few Warrior Herds comprise of companions who’ve been beaten down in the training yard."
+      },
+      "Salubri (Watcher Caste)": {
+        disciplines: ["Auspex", "Obfuscate", "Valeren"],
+        weakness: "If a Salubri learns but one dot of Valeren, they manifest the Discipline’s signature third eye. Ironically, Watchers can be remarkably short-sighted, having a tendency to fixate on their preferred small details and ignore the larger conceptual picture. Watchers must choose a field of study narrow enough for a Knowledge specialty, such as the Ten Thousand Demons, a specific mortal culture, or the esoterics of Necromancy. Watchers must succeed on a Willpower roll (difficulty 6) to pass up an opportunity (as defined by the Storyteller) to acquire or study knowledge of their field, or lose two dice from all pools for the remainder of the night."
+      },
+      "True Brujah": {
+        disciplines: ["Potence", "Presence", "Temporis"],
+        weakness: "True Brujah become dispassionate soon after their Embrace (if they weren’t already) and this only gets worse as the years take their toll. The difficulty of all Conscience and Conviction rolls are increased by two (maximum 9). Purchasing ratings in Conscience, Conviction, and Roads cost double the normal experience costs."
+      }
+    };
+
+    // Archetypes (Nature / Demeanor) Database
+    const archetypesDatabase = {
+      "Architect": {
+        description: "The Architect holds to a purpose greater than herself and is fulfilled when creating something of lasting value for others. She works to provide necessities to those around her.",
+        willpower: "Regain a point of Willpower whenever you establish something of importance or lasting value."
+      },
+      "Autocrat": {
+        description: "The Autocrat pursues power and control for its own sake.",
+        willpower: "Regain a point of Willpower when you exercise control over a group or organization."
+      },
+      "Beast": {
+        description: "The Beast only respects actual deeds and believes civilization is a trap set for the weak. What counts is personal achievement.",
+        willpower: "Regain a point of Willpower when you beat civilized competition through personal action."
+      },
+      "Bon Vivant": {
+        description: "The Bon Vivant lives life to the fullest, making use of every second.",
+        willpower: "Regain a point of Willpower when you truly enjoy yourself. At the Storyteller’s discretion, a particularly fabulous revel may yield multiple Willpower points."
+      },
+      "Bravo": {
+        description: "The Bravo believes that might makes right. Power matters, and while physical power is the best kind, any will do.",
+        willpower: "Regain a point of Willpower any time you achieve your agenda through physical or social brutishness or intimidation."
+      },
+      "Caregiver": {
+        description: "The Caregiver takes comfort in consoling others, and people often come to her with their problems.",
+        willpower: "Regain a point of Willpower whenever you successfully protect or nurture someone."
+      },
+      "Celebrant": {
+        description: "The Celebrant takes joy in her cause and indulges in her chosen passion as deeply as possible. She pursues it out of enthusiasm, not duty.",
+        willpower: "Regain a point of Willpower whenever you pursue your cause or convert another character to the same passion."
+      },
+      "Chameleon": {
+        description: "The Chameleon is independent and careful. He studies behavior and mannerisms to pass himself off as someone else later.",
+        willpower: "Regain a point of Willpower whenever you fool someone into thinking you’re someone else for your own benefit."
+      },
+      "Child": {
+        description: "The Child is immature in personality and temperament. She can care for herself if need be, but would rather have someone cater to her desires.",
+        willpower: "Regain a point of Willpower whenever you convince someone to help you with no gain to himself."
+      },
+      "Competitor": {
+        description: "The Competitor approaches every task and social interaction as a new challenge to meet and contest to win.",
+        willpower: "Regain a point of Willpower whenever you succeed in a dramatic situation. Especially difficult victories may allow you to regain multiple Willpower points at the Storyteller’s discretion."
+      },
+      "Conformist": {
+        description: "The Conformist is a follower, throwing in with the rest of the group and lending aid to the cause.",
+        willpower: "Regain a point of Willpower whenever the group or your supported leader achieves a goal due to your support."
+      },
+      "Conniver": {
+        description: "The Conniver finds the fast track to success and wealth through trickery and manipulation.",
+        willpower: "Regain a point of Willpower whenever you trick someone into doing something or convince them to help you against their best interests."
+      },
+      "Creep Show": {
+        description: "The Creep Show revels in shocking and disgusting those around her. It’s a facade to intimidate and control others, but others buy into it and think she’s the Devil incarnate.",
+        willpower: "Regain a point of Willpower whenever someone recoils from you in horror or reacts in fear."
+      },
+      "Curmudgeon": {
+        description: "The Curmudgeon is bitter and cynical, finding flaws in everything and seeing little humor in life or unlife. Fatalistic and pessimistic, he has very little esteem for others.",
+        willpower: "Regain a point of Willpower whenever someone takes a specific negative action, just like you said they would. You must predict this failure aloud."
+      },
+      "Dabbler": {
+        description: "The Dabbler is interested in everything but focuses on nothing. He flits from idea to idea without actually finishing anything.",
+        willpower: "Regain a point of Willpower whenever you find a new enthusiasm and drop your old one completely."
+      },
+      "Defender": {
+        description: "The Defender struggles to defend her chosen cause in the face of its enemies. It may be some fragile innovation or hope of future progress.",
+        willpower: "Regain a point of Willpower whenever you successfully defend your cause."
+      },
+      "Deviant": {
+        description: "The Deviant is a freak, ostracized from society by non-mainstream tastes or beliefs and feels the world stands against them.",
+        willpower: "Regain a point of Willpower any time you are able to flout social mores without retribution."
+      },
+      "Enigma": {
+        description: "The Enigma’s actions are bizarre, puzzling, and inexplicable. Her erratic actions suggest she’s eccentric, if not completely crazy.",
+        willpower: "Regain a point of Willpower whenever someone is perplexed by actions you take that later turn out to be a fruitful endeavor."
+      },
+      "Eye of the Storm": {
+        description: "The Eye of the Storm retains a calm appearance but chaos seems to follow him.",
+        willpower: "Regain a point of Willpower whenever a ruckus, riot, or less violent but chaotic phenomenon occurs around you."
+      },
+      "Fanatic": {
+        description: "The Fanatic has a purpose that consumes her existence. She may even feel guilty undertaking an object that deviates from the higher goal.",
+        willpower: "Regain a point of Willpower whenever you accomplish something directly relating to your cause."
+      },
+      "Gallant": {
+        description: "The Gallant is a flamboyant soul, always seeking attention in the company of others, if only to earn their adoration.",
+        willpower: "Regain a point of Willpower whenever you successfully impress another person."
+      },
+      "Guru": {
+        description: "The Guru’s enlightenment draws others to her. Her presence motivates others to engage in spiritual or ideological pursuits.",
+        willpower: "Regain a point of Willpower whenever your guidance moves a person to an enlightened action he normally would not have taken."
+      },
+      "Idealist": {
+        description: "The Idealist believes in some higher goal or morality and tries to reconcile his beliefs with the demands of vampiric existence, often acting contrary to his self-interest in doing so.",
+        willpower: "Regain a point of Willpower any time an action furthers your goals and brings your ideal closer to fruition."
+      },
+      "Jester": {
+        description: "The Jester sees the world as a veil of folly and deceit, and enlightens others through the subtle ways of humor.",
+        willpower: "Regain a point of Willpower whenever you raise the spirits of those in great misery, or when you undermine a bully or tyrant by making him the object of ridicule."
+      },
+      "Loner": {
+        description: "The Loner prefers her own company to that of others, and the feeling is always reciprocated.",
+        willpower: "Regain a point of Willpower when you accomplish something by yourself that still benefits the coterie as a whole in some way."
+      },
+      "Martyr": {
+        description: "The Martyr suffers for his cause, enduring her trials out of the belief that her discomfort will ultimately improve the world.",
+        willpower: "Regain a point of Willpower when you suffer some damage or loss of a definable resource for your ideals or another’s immediate gain."
+      },
+      "Masochist": {
+        description: "The Masochist exists to test her limits and gains satisfaction in humiliation, suffering, denial, and physical pain.",
+        willpower: "Regain a point of Willpower when your own suffering leads to some tangible gain for you, or whenever you experience pain in a unique way."
+      },
+      "Mercenary": {
+        description: "The Mercenary believes anything can be a commodity. Appearance and influence are everything when it comes to a sale, and no advantage is wasted.",
+        willpower: "Regain a point of Willpower whenever you make a successful sale of any commodity or service."
+      },
+      "Monster": {
+        description: "The Monster knows she is a creature of darkness and acts like it. Evil and suffering are tools. She doesn’t commit evil for evil’s sake but rather as a means to understand what she’s become.",
+        willpower: "Regain a point of Willpower whenever you commit a specific atrocity. Storytellers should be careful when rewarding this Archetype. A player who chooses violence as an atrocity shouldn’t regain Willpower every combat, but perhaps only when she needs to roll a degeneration check. Rewards should come as a result of the character challenging his own descent into the Beast."
+      },
+      "Pedagogue": {
+        description: "The Pedagogue knows it all and makes sure his message is heard – at length, if necessary.",
+        willpower: "Regain a point of Willpower whenever you see or learn of someone who has benefited from the wisdom you share with them."
+      },
+      "Penitent": {
+        description: "The Penitent atones for the grave sin she commits simply by being who she is and feels compelled to “make up” for inflicting herself on the world.",
+        willpower: "Regain a point of Willpower whenever you feel that you have achieved absolution for a given sin."
+      },
+      "Perfectionist": {
+        description: "The Perfectionist demands flawless execution from herself as well as others.",
+        willpower: "Regain a point of Willpower whenever you motivate another character to succeed as a result of your own shining example."
+      },
+      "Philosopher": {
+        description: "The Philosopher critically examines every situation looking for logical outcomes and patterns.",
+        willpower: "Regain a point of Willpower any time a logical, systematic approach to a problem helps you solve it, or information gathered logically is of use in another similar situation."
+      },
+      "Rebel": {
+        description: "The Rebel is a malcontent, never satisfied with the status quo or the system as it is. He does everything in his power to undermine authority.",
+        willpower: "Regain a point of Willpower whenever your actions adversely affect your chosen opposition."
+      },
+      "Rogue": {
+        description: "The Rogue only cares about one thing: herself. She is not necessarily a thug or bully; she simply has her own best interests in mind at all times.",
+        willpower: "Regain a point of Willpower whenever your self-centered disposition leads you to profit."
+      },
+      "Sadist": {
+        description: "The Sadist exists to inflict pain and suffering on others. Killing is too easy. She seeks the slowest, most painful means to push others to the ultimate limits.",
+        willpower: "Regain a point of Willpower whenever you inflict pain upon someone for no reason other than your own pleasure."
+      },
+      "Soldier": {
+        description: "The Soldier is not a blindly loyal follower. While she exists for orders, she does not adhere to them unquestioningly. More independent than a Conformist but too tied to the idea of command to be a Loner, the Soldier applies her own techniques to others’ goals and ambition lies within the established hierarchy and structure.",
+        willpower: "Regain a point of Willpower when you achieve your orders’ objectives."
+      },
+      "Survivor": {
+        description: "The Survivor always manages to pull through, no matter the odds or opposition. The Survivor’s utter refusal to accept defeat often makes the difference between success and failure.",
+        willpower: "Regain a point of Willpower whenever you survive a dangerous situation through sheer tenacity, or when your counsel causes someone else to persist in spite of opposition."
+      },
+      "Thrill-Seeker": {
+        description: "The Thrill-Seeker lives for the rush of danger and actively pursues hazardous and possibly deadly situations. He is not actively suicidal or self-destructive; he simply seeks the stimulation of risk.",
+        willpower: "Regain a point of Willpower any time you succeed at a dangerous task you have deliberately undertaken."
+      },
+      "Traditionalist": {
+        description: "The Traditionalist prefers to accomplish her goals with time-tested methods. The status quo is acceptable, even preferable to change.",
+        willpower: "Regain a point of Willpower any time the proven way turns out to be the best. Also, regain a point of Willpower any time you adhere to one of your previously espoused positions and it proves a wise course of action."
+      },
+      "Tyrant": {
+        description: "The Tyrant seeks to be in charge or guide a group, bringing order out of strife.",
+        willpower: "Regain a point of Willpower when you influence or aid a group in the completion of a difficult task."
+      },
+      "Visionary": {
+        description: "The Visionary tests accepted societal limits and seeks what few others have the courage to imagine. She encourages society to offer what it is capable of offering instead of what it actually does offer. She is responsible for bringing about progress and change.",
+        willpower: "Regain a point of Willpower each time you are able to convince others to have faith in your vision of the future."
+      }
+    };
+
+    // Road & Path Database
+        const beastBaseEthics = [
       "- You have survived death, and now preservation of the self is the truest goal you can seek.",
       "- The Beast exists to help you survive, not as some manifestation of evil.",
       "- You have fought for everything you have, and have right to everything you’ve fought for.",
@@ -3403,179 +3714,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     };
 
-    // Aligned V20DA Core Archetype Database
-    const archetypesDatabase = {
-      "Architect": {
-        description: "The Architect holds to a purpose greater than herself and is fulfilled when creating something of lasting value for others. She works to provide necessities to those around her.",
-        willpower: "Regain a point of Willpower whenever you establish something of importance or lasting value."
-      },
-      "Autocrat": {
-        description: "The Autocrat pursues power and control for its own sake.",
-        willpower: "Regain a point of Willpower when you exercise control over a group or organization."
-      },
-      "Beast": {
-        description: "The Beast only respects actual deeds and believes civilization is a trap set for the weak. What counts is personal achievement.",
-        willpower: "Regain a point of Willpower when you beat civilized competition through personal action."
-      },
-      "Bon Vivant": {
-        description: "The Bon Vivant lives life to the fullest, making use of every second.",
-        willpower: "Regain a point of Willpower when you truly enjoy yourself. At the Storyteller’s discretion, a particularly fabulous revel may yield multiple Willpower points."
-      },
-      "Bravo": {
-        description: "The Bravo believes that might makes right. Power matters, and while physical power is the best kind, any will do.",
-        willpower: "Regain a point of Willpower any time you achieve your agenda through physical or social brutishness or intimidation."
-      },
-      "Caregiver": {
-        description: "The Caregiver takes comfort in consoling others, and people often come to her with their problems.",
-        willpower: "Regain a point of Willpower whenever you successfully protect or nurture someone."
-      },
-      "Celebrant": {
-        description: "The Celebrant takes joy in her cause and indulges in her chosen passion as deeply as possible. She pursues it out of enthusiasm, not duty.",
-        willpower: "Regain a point of Willpower whenever you pursue your cause or convert another character to the same passion."
-      },
-      "Chameleon": {
-        description: "The Chameleon is independent and careful. He studies behavior and mannerisms to pass himself off as someone else later.",
-        willpower: "Regain a point of Willpower whenever you fool someone into thinking you’re someone else for your own benefit."
-      },
-      "Child": {
-        description: "The Child is immature in personality and temperament. She can care for herself if need be, but would rather have someone cater to her desires.",
-        willpower: "Regain a point of Willpower whenever you convince someone to help you with no gain to himself."
-      },
-      "Competitor": {
-        description: "The Competitor approaches every task and social interaction as a new challenge to meet and contest to win.",
-        willpower: "Regain a point of Willpower whenever you succeed in a dramatic situation. Especially difficult victories may allow you to regain multiple Willpower points at the Storyteller’s discretion."
-      },
-      "Conformist": {
-        description: "The Conformist is a follower, throwing in with the rest of the group and lending aid to the cause.",
-        willpower: "Regain a point of Willpower whenever the group or your supported leader achieves a goal due to your support."
-      },
-      "Conniver": {
-        description: "The Conniver finds the fast track to success and wealth through trickery and manipulation.",
-        willpower: "Regain a point of Willpower whenever you trick someone into doing something or convince them to help you against their best interests."
-      },
-      "Creep Show": {
-        description: "The Creep Show revels in shocking and disgusting those around her. It’s a facade to intimidate and control others, but others buy into it and think she’s the Devil incarnate.",
-        willpower: "Regain a point of Willpower whenever someone recoils from you in horror or reacts in fear."
-      },
-      "Curmudgeon": {
-        description: "The Curmudgeon is bitter and cynical, finding flaws in everything and seeing little humor in life or unlife. Fatalistic and pessimistic, he has very little esteem for others.",
-        willpower: "Regain a point of Willpower whenever someone takes a specific negative action, just like you said they would. You must predict this failure aloud."
-      },
-      "Dabbler": {
-        description: "The Dabbler is interested in everything but focuses on nothing. He flits from idea to idea without actually finishing anything.",
-        willpower: "Regain a point of Willpower whenever you find a new enthusiasm and drop your old one completely."
-      },
-      "Defender": {
-        description: "The Defender struggles to defend her chosen cause in the face of its enemies. It may be some fragile innovation or hope of future progress.",
-        willpower: "Regain a point of Willpower whenever you successfully defend your cause."
-      },
-      "Deviant": {
-        description: "The Deviant is a freak, ostracized from society by non-mainstream tastes or beliefs and feels the world stands against them.",
-        willpower: "Regain a point of Willpower any time you are able to flout social mores without retribution."
-      },
-      "Enigma": {
-        description: "The Enigma’s actions are bizarre, puzzling, and inexplicable. Her erratic actions suggest she’s eccentric, if not completely crazy.",
-        willpower: "Regain a point of Willpower whenever someone is perplexed by actions you take that later turn out to be a fruitful endeavor."
-      },
-      "Eye of the Storm": {
-        description: "The Eye of the Storm retains a calm appearance but chaos seems to follow him.",
-        willpower: "Regain a point of Willpower whenever a ruckus, riot, or less violent but chaotic phenomenon occurs around you."
-      },
-      "Fanatic": {
-        description: "The Fanatic has a purpose that consumes her existence. She may even feel guilty undertaking an object that deviates from the higher goal.",
-        willpower: "Regain a point of Willpower whenever you accomplish something directly relating to your cause."
-      },
-      "Gallant": {
-        description: "The Gallant is a flamboyant soul, always seeking attention in the company of others, if only to earn their adoration.",
-        willpower: "Regain a point of Willpower whenever you successfully impress another person."
-      },
-      "Guru": {
-        description: "The Guru’s enlightenment draws others to her. Her presence motivates others to engage in spiritual or ideological pursuits.",
-        willpower: "Regain a point of Willpower whenever your guidance moves a person to an enlightened action he normally would not have taken."
-      },
-      "Idealist": {
-        description: "The Idealist believes in some higher goal or morality and tries to reconcile his beliefs with the demands of vampiric existence, often acting contrary to his self-interest in doing so.",
-        willpower: "Regain a point of Willpower any time an action furthers your goals and brings your ideal closer to fruition."
-      },
-      "Jester": {
-        description: "The Jester sees the world as a veil of folly and deceit, and enlightens others through the subtle ways of humor.",
-        willpower: "Regain a point of Willpower whenever you raise the spirits of those in great misery, or when you undermine a bully or tyrant by making him the object of ridicule."
-      },
-      "Loner": {
-        description: "The Loner prefers her own company to that of others, and the feeling is always reciprocated.",
-        willpower: "Regain a point of Willpower when you accomplish something by yourself that still benefits the coterie as a whole in some way."
-      },
-      "Martyr": {
-        description: "The Martyr suffers for his cause, enduring her trials out of the belief that her discomfort will ultimately improve the world.",
-        willpower: "Regain a point of Willpower when you suffer some damage or loss of a definable resource for your ideals or another’s immediate gain."
-      },
-      "Masochist": {
-        description: "The Masochist exists to test her limits and gains satisfaction in humiliation, suffering, denial, and physical pain.",
-        willpower: "Regain a point of Willpower when your own suffering leads to some tangible gain for you, or whenever you experience pain in a unique way."
-      },
-      "Mercenary": {
-        description: "The Mercenary believes anything can be a commodity. Appearance and influence are everything when it comes to a sale, and no advantage is wasted.",
-        willpower: "Regain a point of Willpower whenever you make a successful sale of any commodity or service."
-      },
-      "Monster": {
-        description: "The Monster knows she is a creature of darkness and acts like it. Evil and suffering are tools. She doesn’t commit evil for evil’s sake but rather as a means to understand what she’s become.",
-        willpower: "Regain a point of Willpower whenever you commit a specific atrocity. Storytellers should be careful when rewarding this Archetype. A player who chooses violence as an atrocity shouldn’t regain Willpower every combat, but perhaps only when she needs to roll a degeneration check. Rewards should come as a result of the character challenging his own descent into the Beast."
-      },
-      "Pedagogue": {
-        description: "The Pedagogue knows it all and makes sure his message is heard – at length, if necessary.",
-        willpower: "Regain a point of Willpower whenever you see or learn of someone who has benefited from the wisdom you share with them."
-      },
-      "Penitent": {
-        description: "The Penitent atones for the grave sin she commits simply by being who she is and feels compelled to “make up” for inflicting herself on the world.",
-        willpower: "Regain a point of Willpower whenever you feel that you have achieved absolution for a given sin."
-      },
-      "Perfectionist": {
-        description: "The Perfectionist demands flawless execution from herself as well as others.",
-        willpower: "Regain a point of Willpower whenever you motivate another character to succeed as a result of your own shining example."
-      },
-      "Philosopher": {
-        description: "The Philosopher critically examines every situation looking for logical outcomes and patterns.",
-        willpower: "Regain a point of Willpower any time a logical, systematic approach to a problem helps you solve it, or information gathered logically is of use in another similar situation."
-      },
-      "Rebel": {
-        description: "The Rebel is a malcontent, never satisfied with the status quo or the system as it is. He does everything in his power to undermine authority.",
-        willpower: "Regain a point of Willpower whenever your actions adversely affect your chosen opposition."
-      },
-      "Rogue": {
-        description: "The Rogue only cares about one thing: herself. She is not necessarily a thug or bully; she simply has her own best interests in mind at all times.",
-        willpower: "Regain a point of Willpower whenever your self-centered disposition leads you to profit."
-      },
-      "Sadist": {
-        description: "The Sadist exists to inflict pain and suffering on others. Killing is too easy. She seeks the slowest, most painful means to push others to the ultimate limits.",
-        willpower: "Regain a point of Willpower whenever you inflict pain upon someone for no reason other than your own pleasure."
-      },
-      "Soldier": {
-        description: "The Soldier is not a blindly loyal follower. While she exists for orders, she does not adhere to them unquestioningly. More independent than a Conformist but too tied to the idea of command to be a Loner, the Soldier applies her own techniques to others’ goals and ambition lies within the established hierarchy and structure.",
-        willpower: "Regain a point of Willpower when you achieve your orders’ objectives."
-      },
-      "Survivor": {
-        description: "The Survivor always manages to pull through, no matter the odds or opposition. The Survivor’s utter refusal to accept defeat often makes the difference between success and failure.",
-        willpower: "Regain a point of Willpower whenever you survive a dangerous situation through sheer tenacity, or when your counsel causes someone else to persist in spite of opposition."
-      },
-      "Thrill-Seeker": {
-        description: "The Thrill-Seeker lives for the rush of danger and actively pursues hazardous and possibly deadly situations. He is not actively suicidal or self-destructive; he simply seeks the stimulation of risk.",
-        willpower: "Regain a point of Willpower any time you succeed at a dangerous task you have deliberately undertaken."
-      },
-      "Traditionalist": {
-        description: "The Traditionalist prefers to accomplish her goals with time-tested methods. The status quo is acceptable, even preferable to change.",
-        willpower: "Regain a point of Willpower any time the proven way turns out to be the best. Also, regain a point of Willpower any time you adhere to one of your previously espoused positions and it proves a wise course of action."
-      },
-      "Tyrant": {
-        description: "The Tyrant seeks to be in charge or guide a group, bringing order out of strife.",
-        willpower: "Regain a point of Willpower when you influence or aid a group in the completion of a difficult task."
-      },
-      "Visionary": {
-        description: "The Visionary tests accepted societal limits and seeks what few others have the courage to imagine. She encourages society to offer what it is capable of offering instead of what it actually does offer. She is responsible for bringing about progress and change.",
-        willpower: "Regain a point of Willpower each time you are able to convince others to have faith in your vision of the future."
-      }
-    };
-
-    // Strict V20DA Core Rulebook Discipline Database
+    // Discipline Database
     const disciplineDatabase = {
       "Abombwe": [
         { level: 1, name: "Predator's Communion", desc: "Senses nearby predators (vampires, shapeshifters, predatory animals).", sys: "Spend 1 blood point. <strong>Roll Perception + Survival</strong> (difficulty 6)." },
@@ -3834,153 +3973,17 @@ Nothing in this agreement limits our liability to you in the event of death or p
         { level: 6, name: "Chiropteran Marauder", desc: "Advanced zulo form with bat-like wings, allowing flight up to 25 mph.", sys: "Spend 3 blood points. Grow wings; claws deal Strength + 2 aggravated damage." }
       ]
     };
+    
+    /* Safe database fallbacks to eliminate ReferenceError crashes */
+    const safeDisciplineDB = (typeof disciplineDatabase !== 'undefined') ? disciplineDatabase : {};
+    const safeClanDB = (typeof clanDatabase !== 'undefined') ? clanDatabase : {};
+    const safeArchetypesDB = (typeof archetypesDatabase !== 'undefined') ? archetypesDatabase : {};
+    const safeRoadsDB = (typeof roadsDatabase !== 'undefined') ? roadsDatabase : {};
 
-    // V20DA Sourcebook-Aligned Clan Database
-    const clanDatabase = {
-      "Assamite (Sorceror Caste)": {
-        disciplines: ["Clan Sorcery", "Auspex", "Celerity"],
-        weakness: "Sorcerers have a difficult time hiding their arcane nature. All mystical attempts to determine magic use on or around the character are made at a -2 difficulty and are considered two levels higher for the purposes of opposed powers and rolls."
-      },
-      "Assamite (Vizier Caste)": {
-        disciplines: ["Auspex", "Presence", "Quietus Hematus"],
-        weakness: "Assamite viziers are rigorous to a fault. Each character has an obsession with her highest intellectual or creative Ability, which acts as a derangement. While the derangement is active, the character’s aura glows in a way as to provide hints to the vizier’s true Nature, as well as the object of her obsession, visible to Auspex users. Additionally, Assamites darken with age. This is a slow process. But over the centuries, Assamite skin blackens to a matte onyx."
-      },
-      "Assamite (Warrior Caste)": {
-        disciplines: ["Celerity", "Obfuscate", "Quietus Cruscitus"],
-        weakness: "Warriors are marked with their tradition of diablerie. Warrior Assamites always confirm as positive for diablerie whenever scrutinized with supernatural powers, even if the character has never tasted the blood of another Cainite."
-      },
-      "Brujah": {
-        disciplines: ["Celerity", "Potence", "Presence"],
-        weakness: "The passion that inspires the Brujah from night to night can send them into fits of rage if left unchecked. The difficulties of rolls to resist or guide frenzy are two higher than normal. Additionally, a Brujah may never spend Willpower to avoid frenzy. However, they may spend a point of Willpower to end a frenzy that has already begun."
-      },
-      "Cappadocians": {
-        disciplines: ["Auspex", "Fortitude", "Necromancy"],
-        weakness: "The Cappadocian affinity for death is marked indelibly on the visage of its clan members. All Cappadocians appear ashy and corpselike, and are unable to affect the appearance of life like other vampires by spending vitae. This condition becomes more pronounced as the Necromancer ages, with the eldest Cappadocians appearing as mummified corpses. This grim visage presents the Cappadocian with a +2 difficulty on any Social rolls that would be hindered by a corpselike appearance."
-      },
-      "Followers of Set": {
-        disciplines: ["Obfuscate", "Presence", "Serpentis"],
-        weakness: "The enmity between Set and Horus, sun god and son of Set’s hated brother Osiris, is eternal. The Followers of Set carry Horus’ curse more heavily than other vampires and take twice the amount of aggravated damage from any exposure to sunlight than members of other clans."
-      },
-      "Gangrel": {
-        disciplines: ["Animalism", "Fortitude", "Protean"],
-        weakness: "When a Gangrel frenzies, her Beast rises to the surface, and the wildness in her blood finds purchase in her flesh and in her mind. She may develop a small physical or mental animal trait that suits either local vampire mythology, or a predatory or scavenging animal in the region. Examples include overgrown eyebrows, patches of fur, or an hour of torpor after feeding. The net result is that the trait should give them a +1 difficulty penalty and one automatic failure on some relevant dice pool. The trait and the penalty remain until the player accepts the automatic failure."
-      },
-      "Lasombra": {
-        disciplines: ["Dominate", "Obtenebration", "Potence"],
-        weakness: "Lasombra cannot be seen in any sort of reflective surface, which makes it difficult to conceal their supernatural nature from mortals. Additionally, members of the Clan of Shadows cannot abide the presence of bright light; they take an additional level of aggravated damage from any exposure to sunlight."
-      },
-      "Malkavians": {
-        disciplines: ["Auspex", "Dementation", "Obfuscate"],
-        weakness: "Malkav’s children each suffer from an imbalance of the humors that’ll never truly fade. At character creation, choose one derangement. This derangement can never be cured, and a Malkavian may only use Willpower to ignore it for a turn at a time. Even powerful gifts of the blood such as Valeren may only push it aside for a night. After such an effort, however, the derangement comes back in full force. For a week thereafter, the Malkavian cannot use Willpower to resist her derangement at all."
-      },
-      "Nosferatu": {
-        disciplines: ["Animalism", "Obfuscate", "Potence"],
-        weakness: "All Nosferatu wear the blood’s corruption on their face. As a result, all Nosferatu start with zero dots in Appearance, and this cannot be raised. Because of this, they automatically fail any first impression roll (except to intimidate) and have difficulty with many social interactions."
-      },
-      "Ravnos": {
-        disciplines: ["Animalism", "Chimerstry", "Fortitude"],
-        weakness: "While the Ravnos are masters of changing the reality around them, they have a harder time changing their own fundamental reality. All Ravnos have a key personality trait, chosen at character creation, which they are incapable of resisting if the opportunity to express itself presents itself. This can be some kind of virtuous act, such as defending the weak, or something more sinister, such as taking advantage of someone in a lesser position. Often the trait is tied to the jati the Ravnos belongs to. When presented with the opportunity to indulge in her virtue or vice, she does so unless the player succeeds on a Self-Control or Instinct roll (difficulty 6)."
-      },
-      "Toreador": {
-        disciplines: ["Auspex", "Celerity", "Presence"],
-        weakness: "The Toreador has the shortest attention span of all Cainites. Once struck by beauty, it’s as if Cupid’s dart pierced them. If they encounter beauty (Storyteller and player work together to determine appropriate triggers), they must roll Self-Control or Instinct (difficulty 5). If they fail, the daydream of their senses continues until the scene concludes or object departs."
-      },
-      "Tremere": {
-        disciplines: ["Auspex", "Dominate", "Thaumaturgy"],
-        weakness: "The Tremere’s rush to exploit the powers of vampiric blood comes with its own disadvantages: they are particularly vulnerable to blood bonds when they drink the blood of other Damned. The first draught of blood that a Tremere consumes counts as two for the purposes of establishing a bond, meaning that the next drink will complete it."
-      },
-      "Tzimisce": {
-        disciplines: ["Animalism", "Auspex", "Vicissitude"],
-        weakness: "Tzimisce draw their mandate to rule from the very land itself, but this comes with a price. A Tzimisce must rest with at least two handfuls of native soil — that is, soil from a place of importance to them, usually their home or their grave. For each day of rest without it, halve all dice pools (round down), cumulatively, until the pool reaches one die. A full day of proper rest with her native soil will restore the dice pools to their normal value."
-      },
-      "Ventrue": {
-        disciplines: ["Dominate", "Fortitude", "Presence"],
-        weakness: "Rarefied taste has its cost, as the Ventrue are restricted to one particular type of mortal (merchants, French, Catholics, small children). This choice severely limits their feeding pool. They can consume mortal blood outside of this selected preference, but it does not forestall the Beast or provide nourishment."
-      },
-      "Ahrimanes": {
-        disciplines: ["Animalism", "Potence", "Spiritus"],
-        weakness: "An Ahrimane’s blood resists the ties of bondage. She can create neither blood bonds nor ghouls."
-      },
-      "Anda": {
-        disciplines: ["Animalism", "Fortitude", "Protean"],
-        weakness: "The Anda suffer from a kind of loneliness that comes with being cut off from the vast majority of their people, and most especially, from the warm waking face of Tengri. For one hour after sunset, and for the last hour before sunrise, their dice pools are limited by their Road rating as if they were acting during the day."
-      },
-      "Baali": {
-        disciplines: ["Daimonion", "Presence", "Obfuscate"],
-        weakness: "The Torment in the blood of Caine recoils from religious symbols, and the Baali are particularly vulnerable. Unless those religious symbols have lain abandoned for half a century, any individual brandishing a religious symbol at a Devil is considered to have a True Faith rating one higher than their actual rating."
-      },
-      "Bonsam": {
-        disciplines: ["Abombwe", "Obfuscate", "Potence"],
-        weakness: "Possessed by a darkness before time, a Bonsam inspires primordial terror in mortals. Mortals who fail at a Courage roll (difficulty 7) when seeing a Bonsam in his true form either flee in terror or gather up weapons to kill the monster, depending on the size of the mortal group and the Nature of its leader. This fear can be overcome however, and a mortal who has succeeded at this check need not roll again upon meeting the same Bonsam (or at Storyteller’s discretion, any Bonsam)."
-      },
-      "Children of Osiris": {
-        disciplines: ["Bardo"],
-        weakness: "Original clan’s weakness. In addition, the initiation rite to enter the sect renders a new applicant’s blood inert and he is no longer able to Embrace."
-      },
-      "Danava": {
-        disciplines: ["Dominate", "Fortitude", "Thaumaturgy"],
-        weakness: "Like their cousins to the west, the Danava have particularly refined palates when it comes to those they choose as prey, but animals such as cows or pigs are taboo in the extreme. Danava receive no sustenance from animal blood. Members of the bloodline first ritually offer their victims to their gods as a matter of course, but such observances need not be strict or long lasting. Without a ritual of at least thirty seconds, blood offers half sustenance."
-      },
-      "Gargoyles": {
-        disciplines: ["Flight", "Fortitude", "Potence"],
-        weakness: "Gargoyles are social creatures, while an individual may operate singly without impairment, should a Gargoyle ever truly find herself alone in the world — without master, mate, childer, or friend — her dice pools are halved until the condition is rectified. Working in conjunction with a complete stranger can alleviate these penalties on a scene-by-scene basis, but only a mutually acknowledged relationship can restore the Gargoyle fully. Additionally, Gargoyles are particularly susceptible to mind control and domination; their Willpower is always considered two less when resisting such powers."
-      },
-      "Giovani": {
-        disciplines: ["Auspex", "Fortitude", "Necromancy"],
-        weakness: "Like other members of the Cappadocian clan, the Giovani have an ashen quality to their skin which makes humans eerily aware of their otherness. The few bloodline members closest to Augustus himself are perfectly able to appear as if blood was still pumping through their veins, but their Kiss is excruciatingly painful. Some believe the horrors he saw as a mortal man carried through his blood, but this weakness doesn’t seem to have a clear pattern or cause."
-      },
-      "Impundulu": {
-        disciplines: ["Necromancy", "Fortitude", "Presence"],
-        weakness: "An Impundulu only gains sustenance from the Bomkazi. As the witches are independently powerful and their relationship with the Impundulu is voluntary, the Impundulu does well to treat any Bomkazi as an equal ally as opposed to a retainer, with all the complications this might entail."
-      },
-      "Kiasyd": {
-        disciplines: ["Mytherceria"],
-        weakness: "Due to her mark of the fae, the difficulty of rolls to recognize the Kiasyd as otherworldly decrease by one (more if her mark is particularly obvious). Additionally, her fae heritage makes the Kiasyd vulnerable to cold iron. Not only do weapons made from cold iron inflict aggravated damage to her, but such damage triggers an immediate roll to avoid either frenzy or Rötschreck as befitting her Nature."
-      },
-      "Lamiae": {
-        disciplines: ["Fortitude", "Necromancy", "Potence"],
-        weakness: "The Lamiae are not touched by death in the way that the Cappadocians are. No, the Lilin say, they are blessed by that great and terrible Mother that lies beyond death. Her merciless and terrible love brings ruin to those who are weak enough to not withstand it. The bite of the Lamiae brings the Seed of Lilith, a wasting plague that rot away the members of a still-living body until eventually killing mortal victims. The plague causes one lethal damage per night (with a nightly Stamina roll, difficulty 7 to resist) for a fortnight. Any Cainite that consumes Lamia blood will also be carriers of the disease until all Lamia blood is purged from their bodies."
-      },
-      "Lhiannan": {
-        disciplines: ["Animalism", "Presence", "Ogham"],
-        weakness: "The rumors surrounding the Lhiannan and their desperation likely formed from their inherent weakness. Every Lhiannan, from the moment of the Embrace, feels the shard of spirit within her. The sire feels the weakness as she shares her own spirit with her newly-made childe. When a Lhiannan Embraces, her Generation raises by one at the conclusion of the Embrace. For example, if a Ninth Generation Lhiannan Embraces a childe, her blood becomes Tenth Generation blood. The newly-Embraced childe also carries Tenth Generation blood. The sire becomes a generational sibling with her new childe. The eldest known Lhiannan wonder how the bloodline propagated in spite of this flaw, but if any have the answer, they’re not sharing. Lhiannan draw strength from nature, and their power diminishes within urban areas. For each week a Lhiannan spends outside of the wild, her dice pools are reduced by one. These penalties are cumulative, but can never reduce a dice pool lower than her unmodified Stamina. The Lhiannan must sleep a full day in the wilds to remove all the penalties upon waking."
-      },
-      "Nagaraja": {
-        disciplines: ["Auspex", "Dominate", "Necromancy"],
-        weakness: "As the preta of myth, the Flesh-Eaters must consume fresh raw meat to maintain their strength, marking them as untouchable and precluding sustenance without murder. This meat must come from living humans or fresh corpses. They suffer from the Ragged Bite and Flesh Eater Flaws with no recompense. Nagaraja teeth come in sharp rows, and can’t be retracted, but inflict +2 dice of damage in combat when biting."
-      },
-      "Niktuku": {
-        disciplines: ["Auspex", "Celerity", "Potence"],
-        weakness: "The Hungry suffer from an inability to gain sustenance from kine blood. For every three blood points they drain, they gain only one to their system. Cainite vitae nourishes them normally. Additionally, age is difficult and transforming on the bloodline. For every hundred years since their Embrace, the Hungry lose a point from their Appearance Attribute. That dot does not vanish; instead, it moves to any one Physical Attribute that can bear the increase. They grow slowly but decidedly bent, twisted, and deadly, slowly aging grotesques that blame the Nosferatu for their condition."
-      },
-      "Ramanga": {
-        disciplines: ["Obtenebration", "Obfuscate", "Presence"],
-        weakness: "A Ramanga’s use of Presence and Aizina (Obtenebration), when impacting others, is at +1 difficulty normally. However, if she has a physical piece of the victim, this penalty is negated."
-      },
-      "Salubri (Healer Caste)": {
-        disciplines: ["Auspex", "Presence", "Valeren - Healer"],
-        weakness: "If a Salubri learns but one dot of Valeren, he manifests the Discipline’s signature third eye. Salubri Healers must succeed on a Willpower roll (difficulty 6) if they attempt to feed on the unwilling; if they fail, they must find a willing vessel or suffer a two-die penalty on all rolls for the remainder of the night. Victims enthralled by Presence count as willing vessels."
-      },
-      "Salubri (Warrior Caste)": {
-        disciplines: ["Auspex", "Fortitude", "Valeren - Warrior"],
-        weakness: "If a Salubri learns but one dot of Valeren, she manifests the Discipline’s signature third eye. Salubri Warriors must test their strength and establish martial dominance; they must succeed on a Willpower roll (difficulty 6) if they attempt to feed on someone whom they have not vanquished in a fight, or suffer a two-die penalty on all rolls for the rest of the night. This may be defined as a duel to the death, or a simple brawl to Incapacitated. A few Warrior Herds comprise of companions who’ve been beaten down in the training yard."
-      },
-      "Salubri (Watcher Caste)": {
-        disciplines: ["Auspex", "Obfuscate", "Valeren"],
-        weakness: "If a Salubri learns but one dot of Valeren, they manifest the Discipline’s signature third eye. Ironically, Watchers can be remarkably short-sighted, having a tendency to fixate on their preferred small details and ignore the larger conceptual picture. Watchers must choose a field of study narrow enough for a Knowledge specialty, such as the Ten Thousand Demons, a specific mortal culture, or the esoterics of Necromancy. Watchers must succeed on a Willpower roll (difficulty 6) to pass up an opportunity (as defined by the Storyteller) to acquire or study knowledge of their field, or lose two dice from all pools for the remainder of the night."
-      },
-      "True Brujah": {
-        disciplines: ["Potence", "Presence", "Temporis"],
-        weakness: "True Brujah become dispassionate soon after their Embrace (if they weren’t already) and this only gets worse as the years take their toll. The difficulty of all Conscience and Conviction rolls are increased by two (maximum 9). Purchasing ratings in Conscience, Conviction, and Roads cost double the normal experience costs."
-      }
-    };
-
-    /* --- PARENT DISCIPLINE FILTERING ENGINE FOR PATHS --- */
+    /* PARENT DISCIPLINE FILTERING */
 
     function setParentFilter(btnEl, disciplineName) {
       const isAlreadyActive = btnEl.classList.contains('active');
-      
-      // Un-highlight all filter buttons
       document.querySelectorAll('.path-filter-btn').forEach(btn => btn.classList.remove('active'));
 
       if (isAlreadyActive) {
@@ -4004,7 +4007,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         let optionsHTML = `<option value="" disabled ${!currentVal ? 'selected' : ''}>Select Path...</option>`;
         optionsHTML += `<option value="custom" ${currentVal === 'custom' ? 'selected' : ''}>Custom...</option>`;
 
-        // If current value is custom or a value not in the filtered list, ensure option persists
         if (currentVal && currentVal !== 'custom' && !allPaths.includes(currentVal)) {
           optionsHTML += `<option value="${currentVal}" selected>${currentVal}</option>`;
         }
@@ -4020,7 +4022,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
       });
     }
 
-    /* --- DYNAMIC PATH ROW & PATH CARDS SYSTEM --- */
+    /* DYNAMIC PATH ROW & PATH CARDS SYSTEM */
 
     function addPathRow(targetListId, initialName = '', initialVal = 0, initialDesc = '', initialPowers = '') {
       const list = document.getElementById(targetListId);
@@ -4061,7 +4063,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
           <div class="trait" data-id="${rowId}-trait" data-min="0" data-max="6" data-value="${initialVal}" style="flex-shrink: 0; margin-bottom: 0;">
             <div class="dots-container"></div>
           </div>
-          <button class="delete-btn" onclick="removePathRow('${rowId}')" style="flex-shrink: 0; font-size: 1.2rem;">&times;</button>
+          <button type="button" class="delete-btn" onclick="removePathRow('${rowId}')" style="flex-shrink: 0; font-size: 1.2rem;">&times;</button>
         </div>
         <div class="custom-path-boxes" style="display: ${isCustom ? 'block' : 'none'}; margin-top: 6px;">
           <textarea class="custom-path-desc" rows="3" placeholder="Path Description..." oninput="queueAutoSave()">${initialDesc}</textarea>
@@ -4140,7 +4142,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       if (activePaths.length === 0) return;
 
-      // Sort alphabetically by Path Name
       activePaths.sort((a, b) => a.name.localeCompare(b.name));
 
       activePaths.forEach(item => {
@@ -4158,7 +4159,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         cardWrapper.style.boxSizing = "border-box";
         cardWrapper.id = `path-card-${item.name.replace(/\s+/g, '-')}`;
 
-        // Header container with click-to-minimize chevron
         const headerEl = document.createElement('div');
         headerEl.style.display = "flex";
         headerEl.style.justifyContent = "space-between";
@@ -4179,7 +4179,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         chevronEl.style.fontSize = "1.1rem";
         chevronEl.style.color = "var(--accent-red)";
         chevronEl.style.fontWeight = "bold";
-        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;"; // Toggle arrow
+        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;";
 
         headerEl.appendChild(titleEl);
         headerEl.appendChild(chevronEl);
@@ -4232,7 +4232,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       });
     }
 
-    // Dynamically populates and renders active Page 1 Disciplines in the Grimoire Tab
     function renderGrimoireDisciplines() {
       const container = document.getElementById('dynamic-grimoire-disciplines');
       if (!container) return;
@@ -4254,7 +4253,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         return;
       }
 
-      // Sort alphabetically by Discipline Name
       activeDisciplines.sort((a, b) => a.name.localeCompare(b.name));
 
       activeDisciplines.forEach(item => {
@@ -4271,7 +4269,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         discWrapper.style.borderRadius = "0 4px 4px 0";
         discWrapper.id = `grimoire-entry-${item.name.replace(/\s+/g, '-')}`;
 
-        // Header container with click-to-minimize chevron
         const headerEl = document.createElement('div');
         headerEl.style.display = "flex";
         headerEl.style.justifyContent = "space-between";
@@ -4293,7 +4290,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         chevronEl.style.transition = "transform 0.2s";
         chevronEl.style.color = "var(--accent-red)";
         chevronEl.style.fontWeight = "bold";
-        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;"; // Toggle arrow
+        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;";
 
         headerEl.appendChild(titleEl);
         headerEl.appendChild(chevronEl);
@@ -4316,7 +4313,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
             </div>
           `;
         } else {
-          // Robust Level Filtering
           const displayLevels = entry.filter(lvl => {
             return typeof lvl.level === 'number' && lvl.level <= item.dots;
           });
@@ -4338,7 +4334,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       });
     }
 
-    // Dynamically populates and renders active Page 1 Backgrounds on Page 4
     function renderPage4Backgrounds() {
       const container = document.getElementById('dynamic-page4-backgrounds');
       if (!container) return;
@@ -4362,7 +4357,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         return;
       }
 
-      // Sort alphabetically by Background Name
       activeBackgrounds.sort((a, b) => a.localeCompare(b));
 
       activeBackgrounds.forEach(bgName => {
@@ -4381,7 +4375,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         cardWrapper.style.boxSizing = "border-box";
         cardWrapper.id = `background-card-${bgName.replace(/\s+/g, '-')}`;
 
-        // Header container with click-to-minimize chevron/triangle
         const headerEl = document.createElement('div');
         headerEl.style.display = "flex";
         headerEl.style.justifyContent = "space-between";
@@ -4403,7 +4396,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         chevronEl.style.transition = "transform 0.2s";
         chevronEl.style.color = "var(--accent-red)";
         chevronEl.style.fontWeight = "bold";
-        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;"; // Toggle arrow
+        chevronEl.innerHTML = isCollapsed ? "&#9660;" : "&#9650;";
 
         headerEl.appendChild(titleEl);
         headerEl.appendChild(chevronEl);
@@ -4438,7 +4431,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       });
     }
 
-    // Toggle Rituals section collapse/expand
     function toggleRitualsSection(headerEl) {
       const list = document.getElementById('rituals-list');
       const triangle = headerEl.querySelector('.rituals-toggle-triangle');
@@ -4453,7 +4445,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     }
 
-    // Interactive smooth scroll navigation to Page 2 Grimoire entry
     function navigateToDiscipline(name) {
       switchTab('tab-page-2');
       const targetId = `grimoire-entry-${name.replace(/\s+/g, '-')}`;
@@ -4461,7 +4452,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         const el = document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          // Highlight flash to guide the player's eye
           el.style.transition = 'background-color 0.5s';
           el.style.backgroundColor = 'rgba(124, 11, 11, 0.15)';
           setTimeout(() => {
@@ -4471,7 +4461,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }, 100);
     }
 
-    // Interactive smooth scroll navigation to Page 4 Background entry
     function navigateToBackground(name) {
       switchTab('tab-page-4');
       const targetId = `background-card-${name.replace(/\s+/g, '-')}`;
@@ -4479,7 +4468,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         const el = document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          // Highlight flash to guide the player's eye
           el.style.transition = 'background-color 0.5s';
           el.style.backgroundColor = 'rgba(124, 11, 11, 0.15)';
           setTimeout(() => {
@@ -4529,13 +4517,14 @@ Nothing in this agreement limits our liability to you in the event of death or p
       localStorage.setItem('v20_da_characters_index', JSON.stringify(list));
     }
 
-    async function renderDashboard() {
-      const list = await getCharacterList();
+    /* DASHBOARD RENDER & ACTIONS */
+
+    function renderDashboardGrid(list) {
       const listContainer = document.getElementById('character-list');
       if (!listContainer) return;
       listContainer.innerHTML = '';
 
-      if (list.length === 0) {
+      if (!list || list.length === 0) {
         listContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #8c7e6e; font-style: italic;">No records found. Prepare a new character.</p>`;
         return;
       }
@@ -4551,15 +4540,55 @@ Nothing in this agreement limits our liability to you in the event of death or p
             <p style="font-size: 0.75rem; color: #8c7e6e; margin-top: 8px;">Saved: ${new Date(meta.lastSaved).toLocaleDateString()}</p>
           </div>
           <div class="char-card-actions">
-            <button class="btn btn-small" onclick="checkNpcAccess('${meta.id}', function() { openEditor('${meta.id}'); })">Edit</button>
-            <button class="btn btn-secondary btn-small" onclick="checkNpcAccess('${meta.id}', function() { cloneCharacter('${meta.id}'); })">Clone</button>
-            <button class="btn btn-secondary btn-small" onclick="checkNpcAccess('${meta.id}', function() { triggerManualExport('${meta.id}'); })">Export</button>
-            <button class="btn btn-danger btn-small" onclick="checkNpcAccess('${meta.id}', function() { deleteCharacter('${meta.id}'); })">Delete</button>
-            <button class="btn btn-small btn-npc ${meta.isNpc ? 'active' : ''}" onclick="toggleNpc('${meta.id}')">NPC</button>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="openViewOnly('${meta.id}')">View</button>
+              <button type="button" class="btn btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { openEditor('${meta.id}', false); })">Edit</button>
+              <button type="button" class="btn btn-small btn-npc ${meta.isNpc ? 'active' : ''}" style="flex: 1;" onclick="toggleNpc('${meta.id}')">NPC</button>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { triggerManualExport('${meta.id}'); })">Export</button>
+              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { cloneCharacter('${meta.id}'); })">Clone</button>
+              <button type="button" class="btn btn-danger btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { deleteCharacter('${meta.id}'); })">Delete</button>
+            </div>
           </div>
         `;
         listContainer.appendChild(card);
       });
+    }
+
+    async function renderDashboard() {
+      const localList = getLocalIndex();
+      renderDashboardGrid(localList);
+
+      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
+        try {
+          const response = await fetch(API_URL);
+          const cloudList = await response.json();
+          if (Array.isArray(cloudList)) {
+            const deletedIds = new Set(JSON.parse(localStorage.getItem('v20_da_deleted_ids') || '[]'));
+            const localMap = new Map(getLocalIndex().map(item => [item.id, item]));
+
+            const mergedList = cloudList
+              .filter(item => !deletedIds.has(item.id))
+              .map(cloudItem => {
+                const localItem = localMap.get(cloudItem.id);
+                if (localItem) {
+                  return {
+                    ...cloudItem,
+                    isNpc: localItem.isNpc !== undefined ? localItem.isNpc : cloudItem.isNpc,
+                    npcPassword: localItem.npcPassword !== undefined ? localItem.npcPassword : cloudItem.npcPassword
+                  };
+                }
+                return cloudItem;
+              });
+
+            localStorage.setItem('v20_da_characters_index', JSON.stringify(mergedList));
+            renderDashboardGrid(mergedList);
+          }
+        } catch (err) {
+          console.warn("Background cloud list fetch failed; retaining local list.", err);
+        }
+      }
     }
 
     function checkNpcAccess(id, callback) {
@@ -4581,7 +4610,13 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     }
 
-    function toggleNpc(id) {
+    function openViewOnly(id) {
+      checkNpcAccess(id, function() {
+        openEditor(id, true);
+      });
+    }
+
+    async function toggleNpc(id) {
       let charData = null;
       try {
         charData = JSON.parse(localStorage.getItem(id));
@@ -4591,28 +4626,41 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       if (!charData.isNpc) {
         const password = prompt("Enter a password to set this character as an NPC:");
-        if (password === null) return; // Canceled
+        if (password === null) return;
         charData.isNpc = true;
         charData.npcPassword = password;
-        localStorage.setItem(id, JSON.stringify(charData));
-        saveLocalIndex(id, charData.meta ? charData.meta.name : '', charData.meta ? charData.meta.clan : '', charData.mechanics ? charData.mechanics.roadName : '', true, password);
-        renderDashboard();
       } else {
         const input = prompt("Enter the NPC Password to unlock:");
-        if (input === null) return; // Canceled
-        if (input === (charData.npcPassword || "")) {
-          charData.isNpc = false;
-          charData.npcPassword = "";
-          localStorage.setItem(id, JSON.stringify(charData));
-          saveLocalIndex(id, charData.meta ? charData.meta.name : '', charData.meta ? charData.meta.clan : '', charData.mechanics ? charData.mechanics.roadName : '', false, "");
-          renderDashboard();
-        } else {
+        if (input === null) return;
+        if (input !== (charData.npcPassword || "")) {
           alert("Incorrect NPC Password.");
+          return;
         }
+        charData.isNpc = false;
+        charData.npcPassword = "";
+      }
+
+      localStorage.setItem(id, JSON.stringify(charData));
+      saveLocalIndex(
+        id, 
+        charData.meta ? charData.meta.name : '', 
+        charData.meta ? charData.meta.clan : '', 
+        charData.mechanics ? charData.mechanics.roadName : '', 
+        charData.isNpc, 
+        charData.npcPassword
+      );
+
+      renderDashboardGrid(getLocalIndex());
+
+      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
+        fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(charData)
+        }).catch(err => console.warn("Background cloud NPC sync failed:", err));
       }
     }
 
-    async function createNewCharacter() {
+    function createNewCharacter() {
       const charId = 'char_' + Date.now();
       const initialSheet = {
         id: charId,
@@ -4666,85 +4714,102 @@ Nothing in this agreement limits our liability to you in the event of death or p
         haven: { location: '', desc: '' },
         narrative: { prelude: '', goals: '' },
         desc: { age: '', apparent: '', dob: '', rip: '', hair: '', eyes: '', race: '', nationality: '', height: '', weight: '', sex: '' },
-        vis: { coterie: '', sketch: '', image: '' }
+        vis: { coterie: '', sketch: '', image: '', imageName: '' }
       };
 
       localStorage.setItem(charId, JSON.stringify(initialSheet));
       saveLocalIndex(charId, initialSheet.meta.name, initialSheet.meta.clan, '', false, '');
 
-      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
-        try {
-          await fetch(API_URL, {
-            method: "POST",
-            body: JSON.stringify(initialSheet)
-          });
-        } catch (err) {
-          console.warn("Cloud initialization failed, saved locally instead.");
-        }
-      }
+      openEditor(charId, false);
 
-      await openEditor(charId);
+      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
+        fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(initialSheet)
+        }).catch(err => console.warn("Background cloud initialization queued.", err));
+      }
     }
 
-    async function openEditor(id) {
+    function openEditor(id, isReadOnly = false) {
       activeCharacterId = id;
+      window.isReadOnlyMode = isReadOnly;
       setSaveStatus('Loading draft...');
 
-      if (API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
-        try {
-          const sheetData = JSON.parse(localStorage.getItem(id));
-          if (sheetData) {
-            loadSheetIntoDOM(sheetData);
-            document.getElementById('dashboard-view').classList.remove('active');
-            document.getElementById('editor-view').classList.add('active');
-            switchTab('tab-page-1');
-            setSaveStatus('Draft Loaded');
-          } else {
-            setSaveStatus('Draft not found');
-          }
-        } catch (e) {
-          console.error("Error loading sheet from local storage:", e);
-          setSaveStatus('Error loading sheet');
-        }
-        return;
+      const editorView = document.getElementById('editor-view');
+      const readonlyIndicator = document.getElementById('sheet-readonly-indicator');
+
+      if (isReadOnly) {
+        editorView.classList.add('view-only');
+        if (readonlyIndicator) readonlyIndicator.style.display = 'inline-block';
+      } else {
+        editorView.classList.remove('view-only');
+        if (readonlyIndicator) readonlyIndicator.style.display = 'none';
       }
 
+      document.getElementById('dashboard-view').classList.remove('active');
+      editorView.classList.add('active');
+      switchTab('tab-page-1');
+
+      let localData = null;
       try {
-        const response = await fetch(`${API_URL}?id=${id}`);
-        const sheetData = await response.json();
-        loadSheetIntoDOM(sheetData);
-        document.getElementById('dashboard-view').classList.remove('active');
-        document.getElementById('editor-view').classList.add('active');
-        switchTab('tab-page-1');
-        setSaveStatus('Draft Loaded (Cloud)');
-      } catch (err) {
-        console.warn("Cloud fetch failed, trying local fallback...", err);
+        const raw = localStorage.getItem(id);
+        if (raw) localData = JSON.parse(raw);
+      } catch(e) {
+        console.error("Error reading localStorage:", e);
+      }
+
+      if (localData) {
         try {
-          const sheetData = JSON.parse(localStorage.getItem(id));
-          if (sheetData) {
-            loadSheetIntoDOM(sheetData);
-            document.getElementById('dashboard-view').classList.remove('active');
-            document.getElementById('editor-view').classList.add('active');
-            switchTab('tab-page-1');
-            setSaveStatus('Draft Loaded (Local Fallback)');
-          } else {
-            setSaveStatus('Failed to load draft');
-          }
-        } catch (e) {
-          setSaveStatus('Failed to load draft');
+          loadSheetIntoDOM(localData);
+          setSaveStatus(isReadOnly ? 'Read Only View' : 'Draft Loaded (Local)');
+        } catch(e) {
+          console.error("Error loading local sheet into DOM:", e);
+          setSaveStatus('Error Loading Local Draft');
         }
       }
+
+      if (API_URL.includes("YOUR_DEPLOYED_URL_HERE")) return;
+
+      fetch(`${API_URL}?id=${id}`)
+        .then(res => res.json())
+        .then(cloudData => {
+          if (cloudData) {
+            if (typeof cloudData === 'string') {
+              try { cloudData = JSON.parse(cloudData); } catch(e) {}
+            }
+            if (cloudData && (cloudData.id || cloudData.meta)) {
+              localStorage.setItem(id, JSON.stringify(cloudData));
+              if (activeCharacterId === id) {
+                try {
+                  loadSheetIntoDOM(cloudData);
+                  setSaveStatus(isReadOnly ? 'Read Only View' : 'Synced with Cloud');
+                } catch(e) {
+                  console.error("Error loading cloud sheet into DOM:", e);
+                  setSaveStatus('Error Loading Cloud Draft');
+                }
+              }
+            }
+          }
+        })
+        .catch(err => {
+          console.warn("Fetch error from API_URL:", err);
+          if (!localData) setSaveStatus('Offline Mode / Load Failed');
+        });
     }
 
-    async function closeEditor() {
+    function closeEditor() {
       if (saveTimeout) {
         clearTimeout(saveTimeout);
-        await saveCurrentCharacter();
+        if (!window.isReadOnlyMode) {
+          saveCurrentCharacter();
+        }
       }
       activeCharacterId = null;
+      window.isReadOnlyMode = false;
       document.getElementById('editor-view').classList.remove('active');
+      document.getElementById('editor-view').classList.remove('view-only');
       document.getElementById('dashboard-view').classList.add('active');
-      await renderDashboard();
+      renderDashboard();
     }
 
     async function cloneCharacter(id) {
@@ -4780,15 +4845,21 @@ Nothing in this agreement limits our liability to you in the event of death or p
         }
       }
 
-      await renderDashboard();
+      renderDashboard();
     }
 
     async function deleteCharacter(id) {
       if (!confirm("Are you sure you want to permanently delete this character?")) return;
 
+      const deletedIds = JSON.parse(localStorage.getItem('v20_da_deleted_ids') || '[]');
+      if (!deletedIds.includes(id)) deletedIds.push(id);
+      localStorage.setItem('v20_da_deleted_ids', JSON.stringify(deletedIds));
+
       localStorage.removeItem(id);
-      const localList = getLocalIndex().filter(item => item.id !== id);
-      localStorage.setItem('v20_da_characters_index', JSON.stringify(localList));
+      const updatedList = getLocalIndex().filter(item => item.id !== id);
+      localStorage.setItem('v20_da_characters_index', JSON.stringify(updatedList));
+
+      renderDashboardGrid(updatedList);
 
       if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
         try {
@@ -4797,11 +4868,9 @@ Nothing in this agreement limits our liability to you in the event of death or p
             body: JSON.stringify({ action: "delete", id: id })
           });
         } catch (err) {
-          console.warn("Cloud deletion failed.");
+          console.warn("Background cloud deletion failed:", err);
         }
       }
-
-      await renderDashboard();
     }
 
     /* --- DOM DOTS SYSTEM --- */
@@ -4820,7 +4889,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       const max = parseInt(container.getAttribute('data-max')) || 6;
       const min = parseInt(container.getAttribute('data-min')) || 0;
       
-      // Safe parsing to prevent NaN properties
       let currentVal = parseInt(container.getAttribute('data-value'));
       if (isNaN(currentVal)) {
         currentVal = parseInt(container.getAttribute('data-default')) || min;
@@ -4837,6 +4905,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     function handleDotClick(container, clickedIndex) {
+      if (window.isReadOnlyMode) return;
       const min = parseInt(container.getAttribute('data-min')) || 0;
       let currentVal = parseInt(container.getAttribute('data-value')) || 0;
 
@@ -4848,11 +4917,10 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       container.setAttribute('data-value', currentVal);
       renderDots(container);
-      renderGrimoireDisciplines(); // Instantly synchronize Grimoire description updates
-      renderGrimoirePaths();       // Instantly synchronize Grimoire Path Cards updates
-      renderPage4Backgrounds();    // Instantly synchronize Page 4 Background updates
+      renderGrimoireDisciplines();
+      renderGrimoirePaths();
+      renderPage4Backgrounds();
       
-      // Dynamic updates
       if (container.getAttribute('data-id') === 'willpower-perm') {
         updateWillpowerTempPool(currentVal);
       }
@@ -4861,12 +4929,10 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     function buildTempPools() {
-      // Initialize willpower temp pool with default or actual willpower-perm value (defaults to 0 or 1)
       const wpPermEl = document.querySelector('[data-id="willpower-perm"]');
       const wpVal = wpPermEl ? parseInt(wpPermEl.getAttribute('data-value')) || 0 : 0;
       updateWillpowerTempPool(wpVal);
 
-      // Initialize blood pool capacity based on current generation selection
       updateBloodPoolCapacity();
     }
 
@@ -4874,7 +4940,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       const wpPool = document.getElementById('willpower-temp-pool');
       if (!wpPool) return;
       
-      // Cache currently checked states to preserve them
       const states = [];
       wpPool.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         states.push(cb.checked);
@@ -4918,7 +4983,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         bpSpendLimitLabel.textContent = spendLimitText;
       }
 
-      // Cache currently checked states to preserve them
       const states = [];
       bpPool.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         states.push(cb.checked);
@@ -4997,7 +5061,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
             weaknessTxt.value = entry.weakness || '';
           }
           const list = document.getElementById('disciplines-list');
-          if (list) {
+          if (list && entry.disciplines) {
+            list.innerHTML = '';
             entry.disciplines.forEach(discName => {
               addDynamicRow('disciplines-list', 'discipline', discName, 0);
             });
@@ -5126,7 +5191,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       const selectedVal = selectEl.value;
 
-      // 1. Clear fields
       const auraEl = document.getElementById('aura-bearing');
       if (auraEl) auraEl.value = '';
 
@@ -5150,7 +5214,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
         if (ratEl) ratEl.value = '';
       }
 
-      // 2. Populate fields if selecting a valid profile in roadsDatabase
       if (selectedVal && roadsDatabase[selectedVal]) {
         const data = roadsDatabase[selectedVal];
 
@@ -5188,40 +5251,115 @@ Nothing in this agreement limits our liability to you in the event of death or p
     /* --- PORTRAIT HANDLERS --- */
 
     function handleImageUpload(event) {
+      if (isUploadingImage) return;
       const file = event.target.files[0];
       if (!file) return;
-      
+
+      isUploadingImage = true;
+      setSaveStatus("Uploading image to Google Drive...");
+
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = async function(e) {
         const base64Data = e.target.result;
-        const imgPreview = document.getElementById('vis-image-preview');
-        if (imgPreview) {
-          imgPreview.src = base64Data;
-          imgPreview.style.display = 'block';
+
+        if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
+          try {
+            const response = await fetch(API_URL, {
+              method: "POST",
+              body: JSON.stringify({
+                action: "uploadImage",
+                charId: activeCharacterId,
+                imageName: file.name,
+                imageData: base64Data
+              })
+            });
+            const result = await response.json();
+
+            if (result.status === "success" && result.imageUrl) {
+              window.activeImageName = result.imageName || file.name;
+
+              const imgPreview = document.getElementById('vis-image-preview');
+              if (imgPreview) {
+                imgPreview.src = result.imageUrl;
+                imgPreview.style.display = 'block';
+              }
+              const delBtn = document.getElementById('vis-image-delete');
+              if (delBtn) delBtn.style.display = 'inline-block';
+
+              setSaveStatus("Image uploaded to Drive!");
+            } else {
+              alert("Error uploading image to Google Drive: " + (result.message || "Unknown error"));
+            }
+          } catch (err) {
+            console.error("Image upload failed:", err);
+            alert("Failed to upload image to Google Drive.");
+          } finally {
+            isUploadingImage = false;
+            event.target.value = '';
+            queueAutoSave();
+          }
+        } else {
+          // Local fallback if no API_URL is set
+          window.activeImageName = file.name;
+          const imgPreview = document.getElementById('vis-image-preview');
+          if (imgPreview) {
+            imgPreview.src = base64Data;
+            imgPreview.style.display = 'block';
+          }
+          const delBtn = document.getElementById('vis-image-delete');
+          if (delBtn) delBtn.style.display = 'inline-block';
+          isUploadingImage = false;
+          event.target.value = '';
+          queueAutoSave();
         }
-        const delBtn = document.getElementById('vis-image-delete');
-        if (delBtn) delBtn.style.display = 'inline-block';
-        
-        queueAutoSave();
       };
+
+      reader.onerror = function() {
+        isUploadingImage = false;
+        event.target.value = '';
+      };
+
       reader.readAsDataURL(file);
     }
 
-    function deleteCharacterImage() {
+    async function deleteCharacterImage() {
       if (!confirm("Are you sure you want to delete this portrait?")) return;
+
+      // Clear window active name tracker
+      window.activeImageName = '';
+
+      // Completely remove image preview source
       const imgPreview = document.getElementById('vis-image-preview');
       if (imgPreview) {
-        imgPreview.src = '';
+        imgPreview.removeAttribute('src');
         imgPreview.style.display = 'none';
       }
+
       const fileInput = document.getElementById('vis-image-file');
       if (fileInput) fileInput.value = '';
+
       const delBtn = document.getElementById('vis-image-delete');
       if (delBtn) delBtn.style.display = 'none';
-      
-      queueAutoSave();
-    }
 
+      // Save character sheet updates to clear image references from Google Sheet
+      queueAutoSave();
+
+      // Send request to Apps Script to delete the file physically from Google Drive
+      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE") && activeCharacterId) {
+        try {
+          await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "deleteImage",
+              charId: activeCharacterId
+            })
+          });
+        } catch (err) {
+          console.warn("Failed to delete image from Google Drive:", err);
+        }
+      }
+    }
+    
     /* --- DYNAMIC LIST ADDITIONS --- */
 
     function addCustomAbilityRow(targetListId, type, initialName = '', initialVal = 0) {
@@ -5240,7 +5378,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       row.innerHTML = `
         <input type="text" class="dynamic-name" style="background: transparent; border: none; border-bottom: 1px dashed var(--border-color); font-family: inherit; font-size: 0.9rem; flex-grow: 1; min-width: 50px; color: var(--text-dark);" placeholder="Custom ${type}..." value="${initialName}" oninput="queueAutoSave()">
-        <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="color: var(--accent-red); font-weight: bold; background: none; border: none; cursor: pointer; padding: 0 5px; font-size: 1.1rem; flex-shrink: 0;">&times;</button>
+        <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="color: var(--accent-red); font-weight: bold; background: none; border: none; cursor: pointer; padding: 0 5px; font-size: 1.1rem; flex-shrink: 0;">&times;</button>
         <div class="trait" data-id="${rowId}-trait" data-min="0" data-max="6" data-value="${initialVal}" style="flex-shrink: 0; margin-bottom: 0;">
           <div class="dots-container"></div>
         </div>
@@ -5334,7 +5472,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         <div class="trait" data-id="${rowId}-trait" data-min="0" data-max="6" data-value="${initialVal}">
           <div class="dots-container"></div>
         </div>
-        <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); renderPage4Backgrounds(); queueAutoSave();" style="align-self: center; font-size: 1.2rem;">&times;</button>
+        <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); renderPage4Backgrounds(); queueAutoSave();" style="align-self: center; font-size: 1.2rem;">&times;</button>
       `;
 
       list.appendChild(row);
@@ -5352,8 +5490,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       renderPage4Backgrounds();
       queueAutoSave();
     }
-
-    /* --- Custom Discipline Popup & Link Overlays --- */
 
     function updateDisciplineOverlay(selectEl) {
       const container = selectEl.closest('.discipline-select-container');
@@ -5376,7 +5512,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
       if (!val) {
         overlay.innerHTML = `<span style="color: #8c7e6e; pointer-events: none; font-family: inherit; font-size: 0.9rem; font-style: italic;">Select Discipline...</span>`;
       } else if (standardDisciplines.includes(val)) {
-        overlay.innerHTML = `<a href="#" onclick="navigateToDiscipline('${val}'); return false;" style="color: var(--accent-red); text-decoration: underline; pointer-events: auto; font-weight: bold; font-family: inherit; font-size: 0.9rem; z-index: 2;">${val}</a>`;
+        const safeVal = val.replace(/'/g, "\\'");
+        overlay.innerHTML = `<a href="#" onclick="navigateToDiscipline('${safeVal}'); return false;" style="color: var(--accent-red); text-decoration: underline; pointer-events: auto; font-weight: bold; font-family: inherit; font-size: 0.9rem; z-index: 2;">${val}</a>`;
       } else {
         overlay.innerHTML = `<span style="color: var(--text-dark); pointer-events: none; font-family: inherit; font-size: 0.9rem;">${val}</span>`;
       }
@@ -5430,12 +5567,13 @@ Nothing in this agreement limits our liability to you in the event of death or p
       if (!val) {
         overlay.innerHTML = `<span style="color: #8c7e6e; pointer-events: none; font-family: inherit; font-size: 0.9rem; font-style: italic;">Select Background...</span>`;
       } else if (standardBackgrounds.includes(val)) {
-        overlay.innerHTML = `<a href="#" onclick="navigateToBackground('${val}'); return false;" style="color: var(--accent-red); text-decoration: underline; pointer-events: auto; font-weight: bold; font-family: inherit; font-size: 0.9rem; z-index: 2;">${val}</a>`;
+        const safeVal = val.replace(/'/g, "\\'");
+        overlay.innerHTML = `<a href="#" onclick="navigateToBackground('${safeVal}'); return false;" style="color: var(--accent-red); text-decoration: underline; pointer-events: auto; font-weight: bold; font-family: inherit; font-size: 0.9rem; z-index: 2;">${val}</a>`;
       } else {
         overlay.innerHTML = `<span style="color: var(--text-dark); pointer-events: none; font-family: inherit; font-size: 0.9rem;">${val}</span>`;
       }
     }
-
+    
     function handleBackgroundChange(selectEl) {
       if (selectEl.value === 'custom') {
         const customName = prompt("Enter the name of the custom Background:");
@@ -5484,7 +5622,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
           <input type="text" class="dynamic-name" style="width: 50%" placeholder="${placeholderName}" value="${name}" oninput="queueAutoSave()">
           <input type="text" class="dynamic-type" style="width: 23%" placeholder="Type..." value="${costType}" oninput="queueAutoSave()">
           <input type="text" class="dynamic-val" style="width: 15%" placeholder="${placeholderVal}" value="${costValue}" oninput="queueAutoSave()">
-          <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="font-size: 1.2rem;">&times;</button>
+          <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="font-size: 1.2rem;">&times;</button>
         </div>
         <textarea class="dynamic-desc" rows="2" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.85rem; padding: 4px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical; margin-bottom: 8px;" placeholder="Description..." oninput="queueAutoSave()">${description}</textarea>
       `;
@@ -5512,7 +5650,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         <div class="trait" data-id="${rowId}-trait" data-min="0" data-max="6" data-value="${val}" style="flex-shrink: 0;">
           <div class="dots-container"></div>
         </div>
-        <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="flex-shrink: 0;">&times;</button>
+        <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="flex-shrink: 0;">&times;</button>
       `;
 
       list.appendChild(row);
@@ -5537,7 +5675,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         <div class="dynamic-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px;">
           <input type="text" class="dynamic-name" style="flex-grow: 1; min-width: 50px; background: transparent; border: none; border-bottom: 1px dashed var(--border-color); font-family: inherit; font-size: 0.9rem;" placeholder="Ritual Name..." value="${name}" oninput="queueAutoSave()">
           <input type="number" class="dynamic-val" style="width: 45px; text-align: center; background: transparent; border: none; border-bottom: 1px dashed var(--border-color); font-family: inherit; font-size: 0.9rem;" min="1" max="5" value="${level}" oninput="queueAutoSave()">
-          <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="font-size: 1.2rem; cursor: pointer; color: var(--accent-red); background: none; border: none; padding: 0 5px;">&times;</button>
+          <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="font-size: 1.2rem; cursor: pointer; color: var(--accent-red); background: none; border: none; padding: 0 5px;">&times;</button>
         </div>
         <textarea class="dynamic-desc" rows="3" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.85rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical; margin-bottom: 4px;" placeholder="Ritual details/description..." oninput="queueAutoSave()">${desc}</textarea>
       `;
@@ -5562,7 +5700,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
       container.innerHTML = `
         <textarea class="dynamic-name" rows="3" style="flex-grow: 1; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; padding: 6px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); resize: vertical;" placeholder="Derangement details..." oninput="queueAutoSave()">${name}</textarea>
-        <button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="align-self: center; font-size: 1.2rem;">&times;</button>
+        <button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();" style="align-self: center; font-size: 1.2rem;">&times;</button>
       `;
 
       list.appendChild(container);
@@ -5583,16 +5721,16 @@ Nothing in this agreement limits our liability to you in the event of death or p
         <td><input type="text" class="c-rate" value="${rate}" oninput="queueAutoSave()"></td>
         <td><input type="text" class="c-clip" value="${clip}" oninput="queueAutoSave()"></td>
         <td><input type="text" class="c-conceal" value="${conceal}" oninput="queueAutoSave()"></td>
-        <td style="text-align: center;"><button class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();">&times;</button></td>
+        <td style="text-align: center;"><button type="button" class="delete-btn" onclick="document.getElementById('${rowId}').remove(); queueAutoSave();">&times;</button></td>
       `;
       tbody.appendChild(tr);
       queueAutoSave();
     }
 
-/* --- AUTO-EXPANDING TEXTAREAS & ROAD HEIGHT SYNCHRONIZATION --- */
+    /* --- AUTO-EXPANDING TEXTAREAS & ROAD HEIGHT SYNCHRONIZATION --- */
 
     function autoExpandTextarea(ta) {
-      if (!ta || ta.offsetParent === null) return; // Skip hidden textareas to prevent inaccurate 0px calculations
+      if (!ta || ta.offsetParent === null) return;
       
       const compStyle = window.getComputedStyle(ta);
       const minH = parseFloat(compStyle.minHeight) || 40;
@@ -5637,7 +5775,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
     function autoResizeAllTextareas() {
       document.querySelectorAll('textarea').forEach(ta => {
-        // Skip road hierarchy textareas as they are synced in trios
         if (ta.id && ta.id.startsWith('road-') && (ta.id.includes('rating-num') || ta.id.includes('wrongdoing') || ta.id.includes('rationale'))) {
           return;
         }
@@ -5659,7 +5796,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       const activeBtn = document.getElementById(btnId);
       if (activeBtn) activeBtn.classList.add('active');
 
-      // Recalculate heights for newly visible textareas on this page
       setTimeout(() => {
         autoResizeAllTextareas();
       }, 15);
@@ -5681,7 +5817,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     let activeNpcPassword = '';
 
     function queueAutoSave() {
-      if (isLoadingSheet) return; 
+      if (isLoadingSheet || window.isReadOnlyMode) return; 
       setSaveStatus('Saving changes...');
       if (saveTimeout) clearTimeout(saveTimeout);
       saveTimeout = setTimeout(saveCurrentCharacter, 1000);
@@ -5693,7 +5829,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     async function saveCurrentCharacter() {
-      if (!activeCharacterId) return;
+      if (!activeCharacterId || window.isReadOnlyMode) return;
 
       const data = compileSheetData();
       
@@ -5719,7 +5855,15 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
     function compileSheetData() {
       const imgPreview = document.getElementById('vis-image-preview');
-      const imgSrc = imgPreview ? imgPreview.src : '';
+      const hasImageName = window.activeImageName && window.activeImageName.trim() !== '';
+      let validImgSrc = '';
+
+      if (hasImageName && imgPreview) {
+        const rawSrc = imgPreview.getAttribute('src') || imgPreview.src || '';
+        if (rawSrc && (rawSrc.startsWith('data:image') || rawSrc.startsWith('http')) && !rawSrc.includes('.html')) {
+          validImgSrc = rawSrc;
+        }
+      }
 
       const data = {
         id: activeCharacterId,
@@ -5855,7 +5999,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
         vis: {
           coterie: document.getElementById('vis-coterie').value,
           sketch: document.getElementById('vis-sketch').value,
-          image: (imgSrc && (imgSrc.startsWith('data:image') || imgSrc.startsWith('http'))) ? imgSrc : ''
+          image: validImgSrc,
+          imageName: hasImageName ? window.activeImageName : ''
         }
       };
 
@@ -5986,365 +6131,417 @@ Nothing in this agreement limits our liability to you in the event of death or p
       return data;
     }
 
-    function loadSheetIntoDOM(data) {
-      isLoadingSheet = true; 
-
-      activeIsNpc = data.isNpc || false;
-      activeNpcPassword = data.npcPassword || '';
-
-      const npcIndicator = document.getElementById('sheet-npc-indicator');
-      if (npcIndicator) {
-        npcIndicator.style.display = activeIsNpc ? 'inline-block' : 'none';
-      }
-
-      const meta = data.meta || {};
-      document.getElementById('char-name').value = meta.name || '';
-      document.getElementById('char-sire').value = meta.sire || '';
-      document.getElementById('char-concept').value = meta.concept || '';
-      document.getElementById('char-chronicle').value = meta.chronicle || '';
-
-      document.getElementById('meta-notes-left').value = data.meta_notes_left || '';
-      document.getElementById('meta-notes-right').value = data.meta_notes_right || '';
-
-      document.getElementById('specialties-talents').value = data.specialties_talents || '';
-      document.getElementById('specialties-skills').value = data.specialties_skills || '';
-      document.getElementById('specialties-knowledges').value = data.specialties_knowledges || '';
-
-      // Clan Dropdown loading
-      const clanSelect = document.getElementById('char-clan');
-      if (clanSelect) {
-        const metaClan = meta.clan || '';
-        let exists = false;
-        for (let opt of clanSelect.options) {
-          if (opt.value === metaClan) {
-            exists = true;
-            clanSelect.value = metaClan;
-            break;
-          }
-        }
-        if (!exists && metaClan !== '') {
-          const newOpt = document.createElement('option');
-          newOpt.value = metaClan;
-          newOpt.text = metaClan;
-          clanSelect.add(newOpt);
-          clanSelect.value = metaClan;
-        } else if (metaClan === '') {
-          clanSelect.value = '';
+    function normalizeArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'string') {
+        try {
+          const parsed = JSON.parse(val);
+          if (Array.isArray(parsed)) return parsed;
+          if (parsed && typeof parsed === 'object') return Object.values(parsed);
+        } catch (e) {
+          if (val.trim() !== '') return [val];
+          return [];
         }
       }
+      if (typeof val === 'object') {
+        return Object.values(val);
+      }
+      return [];
+    }
 
-      // Generation Dropdown loading
-      const genSelect = document.getElementById('char-generation');
-      if (genSelect) {
-        const metaGen = meta.generation || '';
-        let normalizedGen = metaGen.replace(/th|rd|nd|st/g, '').trim();
-        
-        let exists = false;
-        for (let opt of genSelect.options) {
-          if (opt.value === normalizedGen) {
-            exists = true;
-            genSelect.value = normalizedGen;
-            break;
-          }
+    function ensureObject(val) {
+      if (!val) return {};
+      if (typeof val === 'object' && !Array.isArray(val)) return val;
+      if (typeof val === 'string') {
+        try {
+          const parsed = JSON.parse(val);
+          if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+        } catch(e) {}
+      }
+      return {};
+    }
+
+    function loadSheetIntoDOM(rawData) {
+      isLoadingSheet = true;
+
+      try {
+        let data = rawData;
+        if (typeof data === 'string') {
+          try { data = JSON.parse(data); } catch(e) {}
         }
-        if (!exists && metaGen !== '') {
-          for (let opt of genSelect.options) {
-            if (opt.value === metaGen) {
+        if (!data || typeof data !== 'object') return;
+
+        activeIsNpc = data.isNpc || false;
+        activeNpcPassword = data.npcPassword || '';
+
+        const npcIndicator = document.getElementById('sheet-npc-indicator');
+        if (npcIndicator) {
+          npcIndicator.style.display = activeIsNpc ? 'inline-block' : 'none';
+        }
+
+        const meta = ensureObject(data.meta);
+        document.getElementById('char-name').value = meta.name || '';
+        document.getElementById('char-sire').value = meta.sire || '';
+        document.getElementById('char-concept').value = meta.concept || '';
+        document.getElementById('char-chronicle').value = meta.chronicle || '';
+
+        document.getElementById('meta-notes-left').value = data.meta_notes_left || '';
+        document.getElementById('meta-notes-right').value = data.meta_notes_right || '';
+
+        document.getElementById('specialties-talents').value = data.specialties_talents || '';
+        document.getElementById('specialties-skills').value = data.specialties_skills || '';
+        document.getElementById('specialties-knowledges').value = data.specialties_knowledges || '';
+
+        const clanSelect = document.getElementById('char-clan');
+        if (clanSelect) {
+          const metaClan = meta.clan || '';
+          let exists = false;
+          for (let opt of clanSelect.options) {
+            if (opt.value === metaClan) {
               exists = true;
-              genSelect.value = metaGen;
+              clanSelect.value = metaClan;
               break;
             }
           }
-          if (!exists) {
+          if (!exists && metaClan !== '') {
             const newOpt = document.createElement('option');
-            newOpt.value = metaGen;
-            newOpt.text = metaGen;
-            genSelect.add(newOpt);
-            genSelect.value = metaGen;
-          }
-        } else if (metaGen === '') {
-          genSelect.value = '';
-        }
-      }
-
-      // Nature Dropdown loading
-      const natureSelect = document.getElementById('char-nature');
-      if (natureSelect) {
-        const metaNature = meta.nature || '';
-        let exists = false;
-        for (let opt of natureSelect.options) {
-          if (opt.value === metaNature) {
-            exists = true;
-            natureSelect.value = metaNature;
-            break;
+            newOpt.value = metaClan;
+            newOpt.text = metaClan;
+            clanSelect.add(newOpt);
+            clanSelect.value = metaClan;
+          } else if (metaClan === '') {
+            clanSelect.value = '';
           }
         }
-        if (!exists && metaNature !== '') {
-          const newOpt = document.createElement('option');
-          newOpt.value = metaNature;
-          newOpt.text = metaNature;
-          natureSelect.add(newOpt);
-          natureSelect.value = metaNature;
-        } else if (metaNature === '') {
-          natureSelect.value = '';
-        }
-      }
 
-      // Demeanor Dropdown loading
-      const demeanorSelect = document.getElementById('char-demeanor');
-      if (demeanorSelect) {
-        const metaDemeanor = meta.demeanor || '';
-        let exists = false;
-        for (let opt of demeanorSelect.options) {
-          if (opt.value === metaDemeanor) {
-            exists = true;
-            demeanorSelect.value = metaDemeanor;
-            break;
-          }
-        }
-        if (!exists && metaDemeanor !== '') {
-          const newOpt = document.createElement('option');
-          newOpt.value = metaDemeanor;
-          newOpt.text = metaDemeanor;
-          demeanorSelect.add(newOpt);
-          demeanorSelect.value = metaDemeanor;
-        } else if (metaDemeanor === '') {
-          demeanorSelect.value = '';
-        }
-      }
-
-      updateBloodPoolCapacity();
-
-      // Attributes
-      const attributesList = ['strength', 'dexterity', 'stamina', 'charisma', 'manipulation', 'appearance', 'perception', 'intelligence', 'wits'];
-      attributesList.forEach(id => {
-        const el = document.querySelector(`[data-id="${id}"]`);
-        if (el) {
-          const val = (data.attributes && data.attributes[id] !== undefined) ? data.attributes[id] : 1;
-          el.setAttribute('data-value', val);
-          renderDots(el);
-        }
-      });
-
-      // Abilities
-      const abilitiesList = [
-        'alertness', 'athletics', 'awareness', 'brawl', 'empathy', 'expression', 'intimidation', 'leadership', 'legerdemain', 'subterfuge',
-        'animal_ken', 'archery', 'commerce', 'crafts', 'etiquette', 'melee', 'performance', 'ride', 'stealth', 'survival',
-        'academics', 'enigmas', 'hearth_wisdom', 'investigation', 'law', 'medicine', 'occult', 'politics', 'seneschal', 'theology'
-      ];
-      abilitiesList.forEach(id => {
-        const el = document.querySelector(`[data-id="${id}"]`);
-        if (el) {
-          const val = (data.abilities && data.abilities[id] !== undefined) ? data.abilities[id] : 0;
-          el.setAttribute('data-value', val);
-          renderDots(el);
-        }
-      });
-
-      const customTalentsList = document.getElementById('custom-talents-list');
-      const customSkillsList = document.getElementById('custom-skills-list');
-      const customKnowledgesList = document.getElementById('custom-knowledges-list');
-      if (customTalentsList) customTalentsList.innerHTML = '';
-      if (customSkillsList) customSkillsList.innerHTML = '';
-      if (customKnowledgesList) customKnowledgesList.innerHTML = '';
-
-      if (data.customAbilities) {
-        data.customAbilities.forEach(item => {
-          if (item.type === 'talent') {
-            addCustomAbilityRow('custom-talents-list', 'talent', item.name, item.val);
-          } else if (item.type === 'skill') {
-            addCustomAbilityRow('custom-skills-list', 'skill', item.name, item.val);
-          } else if (item.type === 'knowledge') {
-            addCustomAbilityRow('custom-knowledges-list', 'knowledge', item.name, item.val);
-          }
-        });
-      }
-
-      // Virtues
-      const virtues = data.virtues || {};
-      document.getElementById('virtue-1-type').value = virtues.virtue_1_type || 'Conscience';
-      const v1 = document.querySelector('[data-id="virtue_1"]');
-      if (v1) {
-        v1.setAttribute('data-value', virtues.virtue_1_val || 1);
-        renderDots(v1);
-      }
-
-      document.getElementById('virtue-2-type').value = virtues.virtue_2_type || 'Self-Control';
-      const v2 = document.querySelector('[data-id="virtue_2"]');
-      if (v2) {
-        v2.setAttribute('data-value', virtues.virtue_2_val || 1);
-        renderDots(v2);
-      }
-
-      const v3 = document.querySelector('[data-id="virtue_3"]');
-      if (v3) {
-        v3.setAttribute('data-value', virtues.virtue_3_val || 1);
-        renderDots(v3);
-      }
-
-      // Disciplines & Backgrounds
-      const discList = document.getElementById('disciplines-list');
-      if (discList) discList.innerHTML = '';
-      if (data.disciplines && data.disciplines.length > 0) {
-        data.disciplines.forEach(d => addDynamicRow('disciplines-list', 'discipline', d.name, d.rating));
-      } else {
-        addDynamicRow('disciplines-list', 'discipline');
-      }
-
-      const bgList = document.getElementById('backgrounds-list');
-      if (bgList) bgList.innerHTML = '';
-      if (data.backgrounds && data.backgrounds.length > 0) {
-        data.backgrounds.forEach(b => addDynamicRow('backgrounds-list', 'background', b.name, b.rating));
-      } else {
-        addDynamicRow('backgrounds-list', 'background');
-      }
-
-      // Page 3 Lists
-      const meritsList = document.getElementById('merits-list');
-      if (meritsList) meritsList.innerHTML = '';
-      if (data.merits) data.merits.forEach(m => addCustomRow('merits-list', 'merit', m.name, m.type, m.val, m.desc || ''));
-
-      const flawsList = document.getElementById('flaws-list');
-      if (flawsList) flawsList.innerHTML = '';
-      if (data.flaws) data.flaws.forEach(f => addCustomRow('flaws-list', 'flaw', f.name, f.type, f.val, f.desc || ''));
-
-      const otList = document.getElementById('other-traits-list');
-      if (otList) otList.innerHTML = '';
-      if (data.otherTraits) data.otherTraits.forEach(t => addOtherTraitRow('other-traits-list', t.name, t.val));
-
-      // Page 2 Grimoire Lists
-      const ritList = document.getElementById('rituals-list');
-      if (ritList) ritList.innerHTML = '';
-      if (data.rituals) data.rituals.forEach(r => addRitualRow('rituals-list', r.name, r.level, r.desc || ''));
-
-      const pathList = document.getElementById('paths-list');
-      if (pathList) pathList.innerHTML = '';
-      if (data.paths && data.paths.length > 0) {
-        data.paths.forEach(p => addPathRow('paths-list', p.name, p.val, p.desc || '', p.powers || ''));
-      } else {
-        addPathRow('paths-list');
-      }
-
-      const gNotes = document.getElementById('grimoire-notes');
-      if (gNotes) gNotes.value = data.grimoire_notes || '';
-
-      const derList = document.getElementById('derangements-list');
-      if (derList) derList.innerHTML = '';
-      if (data.derangements) data.derangements.forEach(d => addDerangementRow('derangements-list', d.name));
-
-      // Page 3 Combat Attacks
-      const combatBody = document.querySelector('#combat-attacks-table tbody');
-      if (combatBody) {
-        combatBody.innerHTML = '';
-        if (data.combatAttacks) {
-          data.combatAttacks.forEach(a => addCombatAttackRow(a.weapon, a.diff, a.dmg, a.range, a.rate, a.clip, a.conceal));
-        }
-      }
-
-      // Mechanics
-      const mechanics = data.mechanics || {};
-      const rNameSelect = document.getElementById('road-name');
-      if (rNameSelect) {
-        const metaRoad = mechanics.roadName || '';
-        let exists = false;
-        for (let opt of rNameSelect.options) {
-          if (opt.value === metaRoad) {
-            exists = true;
-            rNameSelect.value = metaRoad;
-            break;
-          }
-        }
-        if (!exists && metaRoad !== '') {
-          let prefixed = metaRoad.startsWith("The ") ? metaRoad : "The " + metaRoad;
-          for (let opt of rNameSelect.options) {
-            if (opt.value === prefixed) {
+        const genSelect = document.getElementById('char-generation');
+        if (genSelect) {
+          const metaGen = (meta.generation || '').toString();
+          let normalizedGen = metaGen.replace(/th|rd|nd|st/g, '').trim();
+          
+          let exists = false;
+          for (let opt of genSelect.options) {
+            if (opt.value === normalizedGen) {
               exists = true;
-              rNameSelect.value = prefixed;
+              genSelect.value = normalizedGen;
               break;
             }
           }
+          if (!exists && metaGen !== '') {
+            for (let opt of genSelect.options) {
+              if (opt.value === metaGen) {
+                exists = true;
+                genSelect.value = metaGen;
+                break;
+              }
+            }
+            if (!exists) {
+              const newOpt = document.createElement('option');
+              newOpt.value = metaGen;
+              newOpt.text = metaGen;
+              genSelect.add(newOpt);
+              genSelect.value = metaGen;
+            }
+          } else if (metaGen === '') {
+            genSelect.value = '';
+          }
         }
-        if (!exists && metaRoad !== '') {
-          const newOpt = document.createElement('option');
-          newOpt.value = metaRoad;
-          newOpt.text = metaRoad;
-          rNameSelect.add(newOpt);
-          rNameSelect.value = metaRoad;
-        } else if (metaRoad === '') {
-          rNameSelect.value = '';
+
+        const natureSelect = document.getElementById('char-nature');
+        if (natureSelect) {
+          const metaNature = meta.nature || '';
+          let exists = false;
+          for (let opt of natureSelect.options) {
+            if (opt.value === metaNature) {
+              exists = true;
+              natureSelect.value = metaNature;
+              break;
+            }
+          }
+          if (!exists && metaNature !== '') {
+            const newOpt = document.createElement('option');
+            newOpt.value = metaNature;
+            newOpt.text = metaNature;
+            natureSelect.add(newOpt);
+            natureSelect.value = metaNature;
+          } else if (metaNature === '') {
+            natureSelect.value = '';
+          }
         }
-      }
 
-      const rRating = document.querySelector('[data-id="road-rating"]');
-      if (rRating) {
-        rRating.setAttribute('data-value', mechanics.roadValue || 0);
-        renderDots(rRating);
-      }
+        const demeanorSelect = document.getElementById('char-demeanor');
+        if (demeanorSelect) {
+          const metaDemeanor = meta.demeanor || '';
+          let exists = false;
+          for (let opt of demeanorSelect.options) {
+            if (opt.value === metaDemeanor) {
+              exists = true;
+              demeanorSelect.value = metaDemeanor;
+              break;
+            }
+          }
+          if (!exists && metaDemeanor !== '') {
+            const newOpt = document.createElement('option');
+            newOpt.value = metaDemeanor;
+            newOpt.text = metaDemeanor;
+            demeanorSelect.add(newOpt);
+            demeanorSelect.value = metaDemeanor;
+          } else if (metaDemeanor === '') {
+            demeanorSelect.value = '';
+          }
+        }
 
-      const aBearing = document.getElementById('aura-bearing');
-      if (aBearing) aBearing.value = mechanics.auraValue || '';
+        updateBloodPoolCapacity();
 
-      const wpPerm = document.querySelector('[data-id="willpower-perm"]');
-      let wpRatingVal = 0;
-      if (wpPerm) {
-        wpRatingVal = mechanics.willpowerPerm || 0;
-        wpPerm.setAttribute('data-value', wpRatingVal);
-        renderDots(wpPerm);
-      }
-      
-      updateWillpowerTempPool(wpRatingVal);
+        const attributes = ensureObject(data.attributes);
+        const attributesList = ['strength', 'dexterity', 'stamina', 'charisma', 'manipulation', 'appearance', 'perception', 'intelligence', 'wits'];
+        attributesList.forEach(id => {
+          const el = document.querySelector(`[data-id="${id}"]`);
+          if (el) {
+            const val = attributes[id] !== undefined ? attributes[id] : 1;
+            el.setAttribute('data-value', val);
+            renderDots(el);
+          }
+        });
 
-      if (mechanics.willpowerTemp) {
-        mechanics.willpowerTemp.forEach((val, i) => {
+        const abilities = ensureObject(data.abilities);
+        const abilitiesList = [
+          'alertness', 'athletics', 'awareness', 'brawl', 'empathy', 'expression', 'intimidation', 'leadership', 'legerdemain', 'subterfuge',
+          'animal_ken', 'archery', 'commerce', 'crafts', 'etiquette', 'melee', 'performance', 'ride', 'stealth', 'survival',
+          'academics', 'enigmas', 'hearth_wisdom', 'investigation', 'law', 'medicine', 'occult', 'politics', 'seneschal', 'theology'
+        ];
+        abilitiesList.forEach(id => {
+          const el = document.querySelector(`[data-id="${id}"]`);
+          if (el) {
+            const val = abilities[id] !== undefined ? abilities[id] : 0;
+            el.setAttribute('data-value', val);
+            renderDots(el);
+          }
+        });
+
+        const customTalentsList = document.getElementById('custom-talents-list');
+        const customSkillsList = document.getElementById('custom-skills-list');
+        const customKnowledgesList = document.getElementById('custom-knowledges-list');
+        if (customTalentsList) customTalentsList.innerHTML = '';
+        if (customSkillsList) customSkillsList.innerHTML = '';
+        if (customKnowledgesList) customKnowledgesList.innerHTML = '';
+
+        const customAbilities = normalizeArray(data.customAbilities);
+        customAbilities.forEach(item => {
+          if (!item) return;
+          const name = item.name || '';
+          const val = parseInt(item.val || item.rating || item.dots || 0) || 0;
+          if (item.type === 'talent') {
+            addCustomAbilityRow('custom-talents-list', 'talent', name, val);
+          } else if (item.type === 'skill') {
+            addCustomAbilityRow('custom-skills-list', 'skill', name, val);
+          } else if (item.type === 'knowledge') {
+            addCustomAbilityRow('custom-knowledges-list', 'knowledge', name, val);
+          }
+        });
+
+        const virtues = ensureObject(data.virtues);
+        document.getElementById('virtue-1-type').value = virtues.virtue_1_type || 'Conscience';
+        const v1 = document.querySelector('[data-id="virtue_1"]');
+        if (v1) {
+          v1.setAttribute('data-value', virtues.virtue_1_val || 1);
+          renderDots(v1);
+        }
+
+        document.getElementById('virtue-2-type').value = virtues.virtue_2_type || 'Self-Control';
+        const v2 = document.querySelector('[data-id="virtue_2"]');
+        if (v2) {
+          v2.setAttribute('data-value', virtues.virtue_2_val || 1);
+          renderDots(v2);
+        }
+
+        const v3 = document.querySelector('[data-id="virtue_3"]');
+        if (v3) {
+          v3.setAttribute('data-value', virtues.virtue_3_val || 1);
+          renderDots(v3);
+        }
+
+        const discList = document.getElementById('disciplines-list');
+        if (discList) discList.innerHTML = '';
+        const disciplines = normalizeArray(data.disciplines);
+        if (disciplines.length > 0) {
+          disciplines.forEach(d => {
+            if (!d) return;
+            const name = typeof d === 'string' ? d : (d.name || d.discipline || d.trait || '');
+            const rating = typeof d === 'object' ? (d.rating !== undefined ? d.rating : (d.val !== undefined ? d.val : (d.value !== undefined ? d.value : (d.dots !== undefined ? d.dots : 0)))) : 0;
+            addDynamicRow('disciplines-list', 'discipline', name, parseInt(rating) || 0);
+          });
+        } else {
+          addDynamicRow('disciplines-list', 'discipline');
+        }
+
+        const bgList = document.getElementById('backgrounds-list');
+        if (bgList) bgList.innerHTML = '';
+        const backgrounds = normalizeArray(data.backgrounds);
+        if (backgrounds.length > 0) {
+          backgrounds.forEach(b => {
+            if (!b) return;
+            const name = typeof b === 'string' ? b : (b.name || b.background || b.trait || '');
+            const rating = typeof b === 'object' ? (b.rating !== undefined ? b.rating : (b.val !== undefined ? b.val : (b.value !== undefined ? b.value : (b.dots !== undefined ? b.dots : 0)))) : 0;
+            addDynamicRow('backgrounds-list', 'background', name, parseInt(rating) || 0);
+          });
+        } else {
+          addDynamicRow('backgrounds-list', 'background');
+        }
+
+        const meritsList = document.getElementById('merits-list');
+        if (meritsList) meritsList.innerHTML = '';
+        normalizeArray(data.merits).forEach(m => {
+          if (m) addCustomRow('merits-list', 'merit', m.name || '', m.type || '', m.val || m.cost || '', m.desc || '');
+        });
+
+        const flawsList = document.getElementById('flaws-list');
+        if (flawsList) flawsList.innerHTML = '';
+        normalizeArray(data.flaws).forEach(f => {
+          if (f) addCustomRow('flaws-list', 'flaw', f.name || '', f.type || '', f.val || f.bonus || '', f.desc || '');
+        });
+
+        const otList = document.getElementById('other-traits-list');
+        if (otList) otList.innerHTML = '';
+        normalizeArray(data.otherTraits).forEach(t => {
+          if (t) addOtherTraitRow('other-traits-list', t.name || '', parseInt(t.val || t.rating || 0) || 0);
+        });
+
+        const ritList = document.getElementById('rituals-list');
+        if (ritList) ritList.innerHTML = '';
+        normalizeArray(data.rituals).forEach(r => {
+          if (r) addRitualRow('rituals-list', r.name || '', r.level || 1, r.desc || '');
+        });
+
+        const pathList = document.getElementById('paths-list');
+        if (pathList) pathList.innerHTML = '';
+        const paths = normalizeArray(data.paths);
+        if (paths.length > 0) {
+          paths.forEach(p => {
+            if (p) addPathRow('paths-list', p.name || '', parseInt(p.val || p.rating || 0) || 0, p.desc || '', p.powers || '');
+          });
+        } else {
+          addPathRow('paths-list');
+        }
+
+        const gNotes = document.getElementById('grimoire-notes');
+        if (gNotes) gNotes.value = data.grimoire_notes || '';
+
+        const derList = document.getElementById('derangements-list');
+        if (derList) derList.innerHTML = '';
+        normalizeArray(data.derangements).forEach(d => {
+          if (d) addDerangementRow('derangements-list', typeof d === 'string' ? d : (d.name || ''));
+        });
+
+        const combatBody = document.querySelector('#combat-attacks-table tbody');
+        if (combatBody) {
+          combatBody.innerHTML = '';
+          normalizeArray(data.combatAttacks).forEach(a => {
+            if (a) addCombatAttackRow(a.weapon || '', a.diff || '', a.dmg || '', a.range || '', a.rate || '', a.clip || '', a.conceal || '');
+          });
+        }
+
+        const mechanics = ensureObject(data.mechanics);
+        const rNameSelect = document.getElementById('road-name');
+        if (rNameSelect) {
+          const metaRoad = mechanics.roadName || '';
+          let exists = false;
+          for (let opt of rNameSelect.options) {
+            if (opt.value === metaRoad) {
+              exists = true;
+              rNameSelect.value = metaRoad;
+              break;
+            }
+          }
+          if (!exists && metaRoad !== '') {
+            let prefixed = metaRoad.startsWith("The ") ? metaRoad : "The " + metaRoad;
+            for (let opt of rNameSelect.options) {
+              if (opt.value === prefixed) {
+                exists = true;
+                rNameSelect.value = prefixed;
+                break;
+              }
+            }
+          }
+          if (!exists && metaRoad !== '') {
+            const newOpt = document.createElement('option');
+            newOpt.value = metaRoad;
+            newOpt.text = metaRoad;
+            rNameSelect.add(newOpt);
+            rNameSelect.value = metaRoad;
+          } else if (metaRoad === '') {
+            rNameSelect.value = '';
+          }
+        }
+
+        const rRating = document.querySelector('[data-id="road-rating"]');
+        if (rRating) {
+          rRating.setAttribute('data-value', mechanics.roadValue || 0);
+          renderDots(rRating);
+        }
+
+        const aBearing = document.getElementById('aura-bearing');
+        if (aBearing) aBearing.value = mechanics.auraValue || '';
+
+        const wpPerm = document.querySelector('[data-id="willpower-perm"]');
+        let wpRatingVal = 0;
+        if (wpPerm) {
+          wpRatingVal = mechanics.willpowerPerm || 0;
+          wpPerm.setAttribute('data-value', wpRatingVal);
+          renderDots(wpPerm);
+        }
+        
+        updateWillpowerTempPool(wpRatingVal);
+
+        const wpTemp = normalizeArray(mechanics.willpowerTemp);
+        wpTemp.forEach((val, i) => {
           const cb = document.getElementById(`wp-temp-${i + 1}`);
-          if (cb) cb.checked = val;
+          if (cb) cb.checked = !!val;
         });
-      }
 
-      if (mechanics.bloodPoolTemp) {
-        mechanics.bloodPoolTemp.forEach((val, i) => {
+        const bpTemp = normalizeArray(mechanics.bloodPoolTemp);
+        bpTemp.forEach((val, i) => {
           const cb = document.getElementById(`bp-temp-${i + 1}`);
-          if (cb) cb.checked = val;
+          if (cb) cb.checked = !!val;
         });
-      }
 
-      // Road of Enlightenment Loading
-      const roadEnlight = data.road_enlightenment || {};
-      if (document.getElementById('road-alt-name')) {
-        document.getElementById('road-alt-name').value = roadEnlight.altName || '';
-      }
-      if (document.getElementById('road-alt-name-extra')) {
-        document.getElementById('road-alt-name-extra').value = roadEnlight.altNameExtra || '';
-      }
-      if (document.getElementById('road-ethics')) {
-        document.getElementById('road-ethics').value = roadEnlight.ethics || '';
-      }
+        const roadEnlight = ensureObject(data.road_enlightenment);
+        if (document.getElementById('road-alt-name')) {
+          document.getElementById('road-alt-name').value = roadEnlight.altName || '';
+        }
+        if (document.getElementById('road-alt-name-extra')) {
+          document.getElementById('road-alt-name-extra').value = roadEnlight.altNameExtra || '';
+        }
+        if (document.getElementById('road-ethics')) {
+          document.getElementById('road-ethics').value = roadEnlight.ethics || '';
+        }
 
-      for (let i = 10; i >= 1; i--) {
-        const numEl = document.getElementById(`road-rating-num-${i}`);
-        const wrongEl = document.getElementById(`road-wrongdoing-${i}`);
-        const ratEl = document.getElementById(`road-rationale-${i}`);
+        const hierarchy = normalizeArray(roadEnlight.hierarchy);
+        for (let i = 10; i >= 1; i--) {
+          const numEl = document.getElementById(`road-rating-num-${i}`);
+          const wrongEl = document.getElementById(`road-wrongdoing-${i}`);
+          const ratEl = document.getElementById(`road-rationale-${i}`);
 
-        if (roadEnlight.hierarchy && Array.isArray(roadEnlight.hierarchy)) {
-          const entry = roadEnlight.hierarchy.find(h => Number(h.level || h.num) === i) || roadEnlight.hierarchy[10 - i];
-          if (entry) {
-            if (numEl) numEl.value = entry.num !== undefined ? entry.num : String(i);
-            if (wrongEl) wrongEl.value = entry.wrongdoing || '';
-            if (ratEl) ratEl.value = entry.rationale || '';
+          if (hierarchy.length > 0) {
+            const entry = hierarchy.find(h => h && Number(h.level || h.num) === i) || hierarchy[10 - i];
+            if (entry) {
+              if (numEl) numEl.value = entry.num !== undefined ? entry.num : String(i);
+              if (wrongEl) wrongEl.value = entry.wrongdoing || '';
+              if (ratEl) ratEl.value = entry.rationale || '';
+            } else {
+              if (numEl) numEl.value = String(i);
+              if (wrongEl) wrongEl.value = '';
+              if (ratEl) ratEl.value = '';
+            }
           } else {
             if (numEl) numEl.value = String(i);
             if (wrongEl) wrongEl.value = '';
             if (ratEl) ratEl.value = '';
           }
-        } else {
-          if (numEl) numEl.value = String(i);
-          if (wrongEl) wrongEl.value = '';
-          if (ratEl) ratEl.value = '';
         }
-      }
 
-      // Health Loading
-      if (data.health) {
+        const health = ensureObject(data.health);
         const healthKeys = [
           'bruised-b', 'bruised-l', 'bruised-a',
           'hurt-b', 'hurt-l', 'hurt-a',
@@ -6358,135 +6555,133 @@ Nothing in this agreement limits our liability to you in the event of death or p
           const cb = document.getElementById(`health-${k}`);
           if (cb) {
             const dataKey = k.replace('-', '_');
-            let val = data.health[dataKey];
+            let val = health[dataKey];
             if (val === undefined) {
               const baseLevel = k.split('-')[0];
-              val = data.health[baseLevel];
+              val = health[baseLevel];
             }
             cb.checked = !!val;
           }
         });
-      }
 
-      const cWeakness = document.getElementById('clan-weakness');
-      if (cWeakness) cWeakness.value = data.clan_weakness || '';
+        const cWeakness = document.getElementById('clan-weakness');
+        if (cWeakness) cWeakness.value = data.clan_weakness || '';
 
-      // Armor
-      const armor = data.armor || {};
-      const aClass = document.getElementById('armor-class');
-      if (aClass) aClass.value = armor.class || '';
-      const aRating = document.getElementById('armor-rating');
-      if (aRating) aRating.value = armor.rating || '';
-      const aPenalty = document.getElementById('armor-penalty');
-      if (aPenalty) aPenalty.value = armor.penalty || '';
-      const aDesc = document.getElementById('armor-desc');
-      if (aDesc) aDesc.value = armor.desc || '';
+        const armor = ensureObject(data.armor);
+        const aClass = document.getElementById('armor-class');
+        if (aClass) aClass.value = armor.class || '';
+        const aRating = document.getElementById('armor-rating');
+        if (aRating) aRating.value = armor.rating || '';
+        const aPenalty = document.getElementById('armor-penalty');
+        if (aPenalty) aPenalty.value = armor.penalty || '';
+        const aDesc = document.getElementById('armor-desc');
+        if (aDesc) aDesc.value = armor.desc || '';
 
-      // Exp
-      const exp = data.exp || {};
-      const eTotal = document.getElementById('exp-total');
-      if (eTotal) eTotal.value = exp.total || '';
-      const eSpent = document.getElementById('exp-spent');
-      if (eSpent) eSpent.value = exp.spent || '';
-      const eSpentOn = document.getElementById('exp-spent-on');
-      if (eSpentOn) eSpentOn.value = exp.spentOn || '';
+        const exp = ensureObject(data.exp);
+        const eTotal = document.getElementById('exp-total');
+        if (eTotal) eTotal.value = exp.total || '';
+        const eSpent = document.getElementById('exp-spent');
+        if (eSpent) eSpent.value = exp.spent || '';
+        const eSpentOn = document.getElementById('exp-spent-on');
+        if (eSpentOn) eSpentOn.value = exp.spentOn || '';
 
-      // Page 4 Expanded Backgrounds
-      const bgExpanded = data.backgrounds_expanded || {};
-      const bgAllies = document.getElementById('bg-allies');
-      if (bgAllies) bgAllies.value = bgExpanded.allies || '';
-      const bgMentor = document.getElementById('bg-mentor');
-      if (bgMentor) bgMentor.value = bgExpanded.mentor || '';
-      const bgContacts = document.getElementById('bg-contacts');
-      if (bgContacts) bgContacts.value = bgExpanded.contacts || '';
-      const bgResources = document.getElementById('bg-resources');
-      if (bgResources) bgResources.value = bgExpanded.resources || '';
-      const bgFame = document.getElementById('bg-fame');
-      if (bgFame) bgFame.value = bgExpanded.fame || '';
-      const bgRetainers = document.getElementById('bg-retainers');
-      if (bgRetainers) bgRetainers.value = bgExpanded.retainers || '';
-      const bgHerd = document.getElementById('bg-herd');
-      if (bgHerd) bgHerd.value = bgExpanded.herd || '';
-      const bgStatus = document.getElementById('bg-status');
-      if (bgStatus) bgStatus.value = bgExpanded.status || '';
-      const bgOther = document.getElementById('bg-other');
-      if (bgOther) bgOther.value = bgExpanded.other || '';
+        const bgExpanded = ensureObject(data.backgrounds_expanded);
+        const bgAllies = document.getElementById('bg-allies');
+        if (bgAllies) bgAllies.value = bgExpanded.allies || '';
+        const bgMentor = document.getElementById('bg-mentor');
+        if (bgMentor) bgMentor.value = bgExpanded.mentor || '';
+        const bgContacts = document.getElementById('bg-contacts');
+        if (bgContacts) bgContacts.value = bgExpanded.contacts || '';
+        const bgResources = document.getElementById('bg-resources');
+        if (bgResources) bgResources.value = bgExpanded.resources || '';
+        const bgFame = document.getElementById('bg-fame');
+        if (bgFame) bgFame.value = bgExpanded.fame || '';
+        const bgRetainers = document.getElementById('bg-retainers');
+        if (bgRetainers) bgRetainers.value = bgExpanded.retainers || '';
+        const bgHerd = document.getElementById('bg-herd');
+        if (bgHerd) bgHerd.value = bgExpanded.herd || '';
+        const bgStatus = document.getElementById('bg-status');
+        if (bgStatus) bgStatus.value = bgExpanded.status || '';
+        const bgOther = document.getElementById('bg-other');
+        if (bgOther) bgOther.value = bgExpanded.other || '';
 
-      // Possessions
-      const possessions = data.possessions || {};
-      const pGear = document.getElementById('poss-gear');
-      if (pGear) pGear.value = possessions.gear || '';
-      const pEquip = document.getElementById('poss-equip');
-      if (pEquip) pEquip.value = possessions.equip || '';
-      const pFeed = document.getElementById('poss-feed');
-      if (pFeed) pFeed.value = possessions.feed || '';
-      const pTrans = document.getElementById('poss-trans');
-      if (pTrans) pTrans.value = possessions.trans || '';
+        const possessions = ensureObject(data.possessions);
+        const pGear = document.getElementById('poss-gear');
+        if (pGear) pGear.value = possessions.gear || '';
+        const pEquip = document.getElementById('poss-equip');
+        if (pEquip) pEquip.value = possessions.equip || '';
+        const pFeed = document.getElementById('poss-feed');
+        if (pFeed) pFeed.value = possessions.feed || '';
+        const pTrans = document.getElementById('poss-trans');
+        if (pTrans) pTrans.value = possessions.trans || '';
 
-      // Haven
-      const haven = data.haven || {};
-      const hLoc = document.getElementById('haven-location');
-      if (hLoc) hLoc.value = haven.location || '';
-      const hDesc = document.getElementById('haven-desc');
-      if (hDesc) hDesc.value = haven.desc || '';
+        const haven = ensureObject(data.haven);
+        const hLoc = document.getElementById('haven-location');
+        if (hLoc) hLoc.value = haven.location || '';
+        const hDesc = document.getElementById('haven-desc');
+        if (hDesc) hDesc.value = haven.desc || '';
 
-      // Page 5 History & Description
-      const narrative = data.narrative || {};
-      const nPrelude = document.getElementById('narrative-prelude');
-      if (nPrelude) nPrelude.value = narrative.prelude || '';
-      const nGoals = document.getElementById('narrative-goals');
-      if (nGoals) nGoals.value = narrative.goals || '';
+        const narrative = ensureObject(data.narrative);
+        const nPrelude = document.getElementById('narrative-prelude');
+        if (nPrelude) nPrelude.value = narrative.prelude || '';
+        const nGoals = document.getElementById('narrative-goals');
+        if (nGoals) nGoals.value = narrative.goals || '';
 
-      const desc = data.desc || {};
-      const dAge = document.getElementById('desc-age');
-      if (dAge) dAge.value = desc.age || '';
-      const dApp = document.getElementById('desc-apparent');
-      if (dApp) dApp.value = desc.apparent || '';
-      const dDob = document.getElementById('desc-dob');
-      if (dDob) dDob.value = desc.dob || '';
-      const dRip = document.getElementById('desc-rip');
-      if (dRip) dRip.value = desc.rip || '';
-      const dHair = document.getElementById('desc-hair');
-      if (dHair) dHair.value = desc.hair || '';
-      const dEyes = document.getElementById('desc-eyes');
-      if (dEyes) dEyes.value = desc.eyes || '';
-      const dRace = document.getElementById('desc-race');
-      if (dRace) dRace.value = desc.race || '';
-      const dNat = document.getElementById('desc-nationality');
-      if (dNat) dNat.value = desc.nationality || '';
-      const dHeight = document.getElementById('desc-height');
-      if (dHeight) dHeight.value = desc.height || '';
-      const dWeight = document.getElementById('desc-weight');
-      if (dWeight) dWeight.value = desc.weight || '';
-      const dSex = document.getElementById('desc-sex');
-      if (dSex) dSex.value = desc.sex || '';
+        const desc = ensureObject(data.desc);
+        const dAge = document.getElementById('desc-age');
+        if (dAge) dAge.value = desc.age || '';
+        const dApp = document.getElementById('desc-apparent');
+        if (dApp) dApp.value = desc.apparent || '';
+        const dDob = document.getElementById('desc-dob');
+        if (dDob) dDob.value = desc.dob || '';
+        const dRip = document.getElementById('desc-rip');
+        if (dRip) dRip.value = desc.rip || '';
+        const dHair = document.getElementById('desc-hair');
+        if (dHair) dHair.value = desc.hair || '';
+        const dEyes = document.getElementById('desc-eyes');
+        if (dEyes) dEyes.value = desc.eyes || '';
+        const dRace = document.getElementById('desc-race');
+        if (dRace) dRace.value = desc.race || '';
+        const dNat = document.getElementById('desc-nationality');
+        if (dNat) dNat.value = desc.nationality || '';
+        const dHeight = document.getElementById('desc-height');
+        if (dHeight) dHeight.value = desc.height || '';
+        const dWeight = document.getElementById('desc-weight');
+        if (dWeight) dWeight.value = desc.weight || '';
+        const dSex = document.getElementById('desc-sex');
+        if (dSex) dSex.value = desc.sex || '';
 
-      const vis = data.vis || {};
-      const vCoterie = document.getElementById('vis-coterie');
-      if (vCoterie) vCoterie.value = vis.coterie || '';
-      const vSketch = document.getElementById('vis-sketch');
-      if (vSketch) vSketch.value = vis.sketch || '';
+        const vis = ensureObject(data.vis);
+        window.activeImageName = vis.imageName || '';
+        const vCoterie = document.getElementById('vis-coterie');
+        if (vCoterie) vCoterie.value = vis.coterie || '';
+        const vSketch = document.getElementById('vis-sketch');
+        if (vSketch) vSketch.value = vis.sketch || '';
 
-      const imgPreview = document.getElementById('vis-image-preview');
-      const delBtn = document.getElementById('vis-image-delete');
-      if (imgPreview && delBtn) {
-        if (vis.image && vis.image.trim() !== '') {
-          imgPreview.src = vis.image;
-          imgPreview.style.display = 'block';
-          delBtn.style.display = 'inline-block';
-        } else {
-          imgPreview.src = '';
-          imgPreview.style.display = 'none';
-          delBtn.style.display = 'none';
+        const imgPreview = document.getElementById('vis-image-preview');
+        const delBtn = document.getElementById('vis-image-delete');
+        if (imgPreview && delBtn) {
+          /* Checks for valid imageName and image data before trying to load preview */
+          if (vis.imageName && vis.image && typeof vis.image === 'string' && vis.image.trim() !== '') {
+            imgPreview.src = vis.image;
+            imgPreview.style.display = 'block';
+            delBtn.style.display = 'inline-block';
+          } else {
+            imgPreview.src = '';
+            imgPreview.style.display = 'none';
+            delBtn.style.display = 'none';
+          }
         }
+      } catch (err) {
+        console.error("Critical error inside loadSheetIntoDOM:", err);
+      } finally {
+        isLoadingSheet = false;
       }
 
-      isLoadingSheet = false; 
       renderGrimoireDisciplines(); 
       renderGrimoirePaths();
       renderPage4Backgrounds();
 
-      // Auto-expand all textareas for loaded character data
       setTimeout(autoResizeAllTextareas, 20);
     }
 
@@ -6532,7 +6727,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
             }
           }
 
-          await renderDashboard();
+          renderDashboard();
           alert("Character imported successfully.");
         } catch (err) {
           alert("Could not parse file.");
@@ -6543,27 +6738,23 @@ Nothing in this agreement limits our liability to you in the event of death or p
       event.target.value = '';
     }
 
-/* --- PRINTABILITY FUNCTION --- */
+    /* --- PRINTABILITY FUNCTION --- */
 
     function printCharacterSheet() {
-      // 1. Synchronize all dynamic cards and lists across all 5 pages
       renderGrimoireDisciplines();
       renderGrimoirePaths();
       renderPage4Backgrounds();
 
-      // 2. Temporarily apply print-mode class and unhide all tabs
       document.body.classList.add('print-mode');
       const tabs = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => tab.style.display = 'block');
 
-      // 3. Auto-expand every textarea based on reduced print font sizing
       document.querySelectorAll('textarea').forEach(ta => {
         ta.style.overflow = 'hidden';
         const compStyle = window.getComputedStyle(ta);
         const minH = parseFloat(compStyle.minHeight) || 36;
         ta.style.height = 'auto';
         
-        // Use a dedicated 28px buffer for Custom Path boxes to handle heavy 2-column line wrapping
         let printBuffer = (ta.value && ta.value.trim() !== '') ? 12 : 0;
         if (ta.classList.contains('custom-path-desc') || ta.classList.contains('custom-path-powers')) {
           printBuffer = (ta.value && ta.value.trim() !== '') ? 28 : 0;
@@ -6573,21 +6764,16 @@ Nothing in this agreement limits our liability to you in the event of death or p
         ta.style.height = targetH + 'px';
       });
 
-      // 4. Synchronize Road row heights
       syncRoadEnlightenmentHeights(true);
 
-      // 5. Reset inline display overrides
       tabs.forEach(tab => tab.style.display = '');
 
-      // 6. Trigger native browser print dialog
       window.print();
 
-      // 7. Cleanup print mode class and restore screen heights
       document.body.classList.remove('print-mode');
       setTimeout(autoResizeAllTextareas, 100);
     }
 
-    // Global listener for live textarea auto-expansion as the user types
     document.addEventListener('input', function(e) {
       if (e.target && e.target.tagName.toLowerCase() === 'textarea') {
         if (e.target.id && e.target.id.startsWith('road-') && (e.target.id.includes('rating-num') || e.target.id.includes('wrongdoing') || e.target.id.includes('rationale'))) {
@@ -6615,6 +6801,14 @@ Nothing in this agreement limits our liability to you in the event of death or p
         renderDashboard();
       } catch (e) {
         console.error("Error rendering dashboard:", e);
+      }
+
+      // Suppress mouse wheel scrolling on tab navigation container
+      const tabsNav = document.querySelector('.tabs-nav');
+      if (tabsNav) {
+        tabsNav.addEventListener('wheel', function(e) {
+          e.preventDefault();
+        }, { passive: false });
       }
     }
 
