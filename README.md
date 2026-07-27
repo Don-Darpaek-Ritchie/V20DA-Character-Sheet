@@ -13,7 +13,7 @@ I know this looks big and complicated, but I promise it is not.  You will get a 
 7.  Open your copy of index.html in any text editor and search for "GOOGLE" (no quotes).
 8.  Replace the YOUR_DEPLOYED_URL_HERE (keep the quotes around your link) in [const API_URL = "YOUR_DEPLOYED_URL_HERE";] with the your /exec/ Google Sheet Web App URL.
 9.  Host your modified index.html anywhere, I think.  I built it and have good success hosting it in a Github repository.  The web site images are hosted through Github's partner CDN so I don't think they will notice us using them and character images are hosted in your Google Drive.
-
+```
 // --- SCRIPT TO PASTE INTO GOOGLE SHEET CODE.GS ---
 
 function getActiveCharSheet(ss) {
@@ -220,7 +220,7 @@ function doPost(e) {
 }
 
 // --- STOP COPYING HERE TO PASTE INTO GOOGLE SHEET CODE.GS ---
-
+```
 
 
 This Web App requires some recent version of Java, so if you buy drugs or slaves off of the Dark Web, you are screwed.  You should be supporting local entrepreneurs anyways.
