@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1024, initial-scale=0.38, maximum-scale=3.0, user-scalable=yes">
+  
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHV4XDJ6RM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KHV4XDJ6RM');
+</script>
+  <!-- Google tag (gtag.js) -->
+  
   <title>V20 Dark Ages Scribe - Character Ledger</title>
   <style>
     :root {
@@ -1712,9 +1724,161 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
   <script>
 
-// Put your GOOGLE Sheet Web App exec URL below
-    
     const API_URL = "YOUR_DEPLOYED_URL_HERE";
+
+    // EMBEDDED FEATURED CHARACTER DATA
+    const DARPAEK_DATA = {
+      "id": "char_1785078326269",
+      "isPreloaded": true,
+      "isNpc": true,
+      "npcPassword": "12345",
+      "meta": {
+        "name": "Darpaek",
+        "clan": "Ravnos",
+        "sire": "Zarathina",
+        "generation": "8",
+        "nature": "Rogue",
+        "demeanor": "Caregiver",
+        "concept": "Ravnos Extraordinaire!",
+        "chronicle": "Constantinople, Not Istanbul"
+      },
+      "meta_notes_left": "Regain a point of Willpower whenever your self-centered disposition leads you to profit.",
+      "meta_notes_right": "The Caregiver takes comfort in consoling others, and people often come to her with their problems.",
+      "attributes": {
+        "strength": 4, "dexterity": 5, "stamina": 5,
+        "charisma": 4, "manipulation": 5, "appearance": 3,
+        "perception": 3, "intelligence": 3, "wits": 5
+      },
+      "abilities": {
+        "alertness": 3, "athletics": 5, "awareness": 3, "brawl": 3, "empathy": 4, "expression": 3, "intimidation": 3, "leadership": 2, "legerdemain": 5, "subterfuge": 5,
+        "animal_ken": 4, "archery": 1, "commerce": 2, "crafts": 0, "etiquette": 2, "melee": 1, "performance": 4, "ride": 1, "stealth": 4, "survival": 4,
+        "academics": 0, "enigmas": 4, "hearth_wisdom": 2, "investigation": 0, "law": 3, "medicine": 0, "occult": 3, "politics": 0, "seneschal": 1, "theology": 2
+      },
+      "customAbilities": [],
+      "specialties_talents": "Strength: Brawl Damage\nDexterity: Brawl\nStamina: Soak Lethal\nAthletics: Dodge\nEmpathy: Detecting Lies\nLegerdemain: Lockpick\nSubterfuge: Chimerstry",
+      "specialties_skills": "Charisma: Presence\nManipulation: Animalism\nAnimal Ken: Ghoul Training\nPerformance: Impersonation/Conman\nStealth: Obfuscate\nSurvival: Sleep Search",
+      "specialties_knowledges": "Wits: Discipline Defense\nEnigmas: Cyphers/Codebreaking",
+      "virtues": {
+        "virtue_1_type": "Conviction", "virtue_1_val": 3,
+        "virtue_2_type": "Self-Control", "virtue_2_val": 4,
+        "virtue_3_val": 5
+      },
+      "disciplines": [
+        { "name": "Animalism", "rating": 5 },
+        { "name": "Chimerstry", "rating": 6 },
+        { "name": "Fortitude", "rating": 5 },
+        { "name": "Auspex", "rating": 1 },
+        { "name": "Celerity", "rating": 1 },
+        { "name": "Obfuscate", "rating": 2 },
+        { "name": "Presence", "rating": 1 },
+        { "name": "Protean", "rating": 3 }
+      ],
+      "backgrounds": [
+        { "name": "Allies", "rating": 3 },
+        { "name": "Alternate Identity", "rating": 2 },
+        { "name": "Domain", "rating": 3 },
+        { "name": "Generation", "rating": 4 },
+        { "name": "Herd", "rating": 4 },
+        { "name": "Resources", "rating": 2 },
+        { "name": "Servants", "rating": 2 },
+        { "name": "Status", "rating": 1 }
+      ],
+      "mechanics": {
+        "roadName": "The Road of Paradox",
+        "roadValue": 5,
+        "auraValue": "Confidence",
+        "willpowerPerm": 8,
+        "willpowerTemp": [false, false, false, false, false, false, false, false],
+        "bloodPoolTemp": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+      },
+      "road_enlightenment": {
+        "altName": "",
+        "altNameExtra": "Sins Against Paradox",
+        "ethics": "- Follow the svadharma set before you. Do not let anyone take you from the one true path.\n- Do not Embrace unless absolutely necessary, and then only from the jati.\n- Assist others to determine and follow their svadharma.\n- Destroy those who refuse to follow their svadharma; return them to samsara.",
+        "hierarchy": [
+          { "level": 10, "num": "10", "wrongdoing": "Failing to accept death", "rationale": "Your svadharma is only temporary, you must eventually return to the samsara." },
+          { "level": 9, "num": "9", "wrongdoing": "Embracing outside the jati", "rationale": "Only Embrace those that will follow the Road of Paradox." },
+          { "level": 8, "num": "8", "wrongdoing": "Destroying another Asura", "rationale": "Your fellows on this Road have a svadharma, do not stop them." },
+          { "level": 7, "num": "7", "wrongdoing": "Killing a mortal for sustenance", "rationale": "Death prevents a person from fulfilling their svadharma in this part of the cycle." },
+          { "level": 6, "num": "6", "wrongdoing": "Failing to kill vampires on another Road", "rationale": "Only by accepting the true path to moksha can a vampire atone. Otherwise, they are useless." },
+          { "level": 5, "num": "5", "wrongdoing": "Allowing personal affairs to interfere in your svadharma", "rationale": "You must follow your sacred duty at all times." },
+          { "level": 4, "num": "4", "wrongdoing": "Failure to aid another’s svadharma", "rationale": "This is your only purpose before returning to the cycle." },
+          { "level": 3, "num": "3", "wrongdoing": "Killing a mortal for any reason other than survival", "rationale": "Preventing others from achieving their svadharma is anathema." },
+          { "level": 2, "num": "2", "wrongdoing": "Becoming blood bound", "rationale": "You cannot destroy your regnant, which could prevent you from following your svadharma." },
+          { "level": 1, "num": "1", "wrongdoing": "Embracing needlessly out of personal desire", "rationale": "You must allow others to continue their cycle, not remove them from it." }
+        ]
+      },
+      "health": {
+        "bruised_b": false, "bruised_l": false, "bruised_a": false,
+        "hurt_b": false, "hurt_l": false, "hurt_a": false,
+        "injured_b": false, "injured_l": false, "injured_a": false,
+        "wounded_b": false, "wounded_l": false, "wounded_a": false,
+        "mauled_b": false, "mauled_l": false, "mauled_a": false,
+        "crippled_b": false, "crippled_l": false, "crippled_a": false,
+        "incapacitated_b": false, "incapacitated_l": false, "incapacitated_a": false
+      },
+      "clan_weakness": "Grand Larceny proportionate to current Resource background.\n\nWhile the Ravnos are masters of changing the reality around them, they have a harder time changing their own fundamental reality. All Ravnos have a key personality trait, chosen at character creation, which they are incapable of resisting if the opportunity to express itself presents itself. This can be some kind of virtuous act, such as defending the weak, or something more sinister, such as taking advantage of someone in a lesser position. Often the trait is tied to the jati the Ravnos belongs to. When presented with the opportunity to indulge in her virtue or vice, she does so unless the player succeeds on a Self-Control or Instinct roll (difficulty 6).",
+      "merits": [
+        { "name": "Speak Languages", "type": "Mental", "val": "3", "desc": "Turkic (Natively), Tsinganoi, Greek, Arabic" },
+        { "name": "Read Languages", "type": "Mental", "val": "5", "desc": "Turkic, Tsinganoi, Greek, Arabic" },
+        { "name": "Common Sense", "type": "Mental", "val": "1", "desc": "You’ve got a good head on your shoulders and a natural aversion to foolish risk. In tense situations, you may ask the Storyteller for hints about the most reasonable course of action. The Storyteller may also grant you a warning against poorly considered actions." }
+      ],
+      "flaws": [
+        { "name": "Dark Secret", "type": "Social", "val": "1", "desc": "Diablerist.\n\nSomething from your past haunts you. If found out, it could destroy your reputation with your clan and coterie. When the truth rears its ugly head, you must quash it or suffer the consequences of your secret getting out. You live every day knowing that at some point, word will get out and you will be unable to stop it." },
+        { "name": "Outsider", "type": "Social", "val": "1", "desc": "This is not your native land; this is not your mother tongue. You are not from around here. Everything is strange and different, from the customs to\nthe food. You struggle with the area’s native language and the difficulty to applicable Social rolls increases by one." },
+        { "name": "Territorial", "type": "Social", "val": "2", "desc": "Adopted Tsinganoi clan.\n\nYou have staked out a claim to a certain area of land and a certain group of mortals and defend it to the point of irrationality. If you catch another vampire hunting on your turf, check for frenzy immediately. Even if you do not frenzy, the thought alone is enough to make you violent. Note that without the necessary backgrounds, your “territory” means nothing to anyone other than you" }
+      ],
+      "otherTraits": [],
+      "rituals": [],
+      "paths": [
+        {
+          "name": "Numina: Curses",
+          "val": 3,
+          "desc": "The curse is one of the most ancient and potent forms of Hedge Magic. It can take many forms, from the \"evil eye\" of the Mediterranean and the Middle East to the \"jinx\" of hoodoo to the \"hex\" of Eastern European folklore.\n\nAt the core of any curse is maleficent intent directed toward an enemy.",
+          "powers": "The target must be visible. The Hedge Magician must take one turn per level of severity to focus her mystic hatred. She then discharges the curse in a cathartic fashion using such methods as a scream, a dance, rending a puppet that represents the victim, or offensive gestures.\n\nSpend 1 Willpower and roll Manipulation + Intimidation (difficulty 7).\n\nTo dispel a curse, spend 1 Willpower and roll Wits + Subterfuge (difficulty 9). Each success reduces the curse by one level.\n\nLevel 3: The victim suffers severe accidents and misfortune. Typical effects might be broken bones, loss of income, or grievous illness. Mechanically, increase difficulties by 3 for rolls relevant to the curse.\n\nCurse Duration:\n1 Success: The next action.\n2 Successes: One scene.\n3 Successes: One day.\n4 Successes: One week.\n5 Successes: One month.\n6 Successes: Up to one year."
+        }
+      ],
+      "grimoire_notes": "Awe: \"Confidently Honest\" - +1 Die to Chimerstry (1 Dot Presence)",
+      "combatAttacks": [
+        { "weapon": "Claws", "diff": "6", "dmg": "Strength +1 Agg", "range": "Melee", "rate": "", "clip": "", "conceal": "" }
+      ],
+      "armor": { "class": "", "rating": "", "penalty": "", "desc": "" },
+      "derangements": [],
+      "exp": { "total": "", "spent": "", "spentOn": "" },
+      "backgrounds_expanded": {
+        "allies": "Tsinganoi craftsmen and traders",
+        "mentor": "", "contacts": "",
+        "resources": "Darpaek's share of communal living with the Tsinganoi.",
+        "fame": "", "retainers": "",
+        "herd": "Tsinganoi clan Darpaek travels with.",
+        "status": "\"Tolerated\" by the Narsene Lasombra",
+        "other": "Servants: Up to 15 Tsinganoi are usually free to help row or engage in miscellaneous tasks.\n\nAlternate Identity: Darpaek pretends to be a Gangrel sometimes."
+      },
+      "possessions": {
+        "gear": "", "equip": "",
+        "feed": "Tsinganoi camp.",
+        "trans": "An akation named \"Baro Čor\". Tsinganoi oarsmen. Shared with merchants and traders of the clan and used for fishing when docked at the camp."
+      },
+      "haven": {
+        "location": "Domain: A Tsinganoi encampment a few hours east from Constantinople across the Bosphorus.",
+        "desc": "The camp is a home for around 50 mortal Tsinganoi, most of them with familiar descent to each other. They know what Darpaek is and view it as their duty to protect him because he protects them from predation from other supernaturals. Darpaek sleeps at the bottom of a well in the middle of the camp.\n\nThe mortal leader of the camp is an elderly Tsinganoi matriarch named Mother Tuso."
+      },
+      "narrative": {
+        "prelude": "As a Ravnos, Darpaek is an outcast from both Greek and Latin Cainite society. His status as the perennial outsider has led him to be driven by a nomadic network of Tsinganoi that provides him with unmatched intelligence. Darpaek operates as a high-stakes, \"blind\" element — someone who is perpetually one rumor away from ensuring the survival of himself and his allies through physical and supernatural problem-solving. As a master of Animalism, Fortitude, and elder-level Chimerstry, he serves as a vital safety net for the coterie. Darpaek’s friendly and helpful demeanor reassures everyone he meets that he is a worthwhile ally to cultivate.",
+        "goals": "\"A burden shared is a burden I can carry for you.\"\n\n\"Allow me to open the door. What lies inside is between you and the Nailed God.\""
+      },
+      "desc": {
+        "age": "417", "apparent": "29", "dob": "October 5, 741 CE", "rip": "770 CE",
+        "hair": "Dark, Wavy", "eyes": "Dark, Mysterious", "race": "Jat (Zutt)",
+        "nationality": "Tsinganoi", "height": "5'11\"", "weight": "170", "sex": "Male"
+      },
+      "vis": {
+        "coterie": "Darpaek hangs out at Nysa's brothel, \"The Golden Horny\" in Galata, and maintains good gossip relations with the girls to keep an eye on the coterie. Spies on them with rats and bats if it looks like they are doing something interesting.",
+        "sketch": "Monkeys Monkeys Monkeys",
+        "image": "https://cdn.jsdelivr.net/gh/Don-Darpaek-Ritchie/V20DA-Character-Sheet@main/Darpaek_2.webp",
+        "imageName": "Darpaek_2.webp"
+      }
+    };
 
     let activeCharacterId = null;
     let saveTimeout = null;
@@ -2337,7 +2501,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
     };
 
     // Backgrounds Database
-    
     const backgroundsDatabase = {
       "Allies": {
         description: "Allies are mortals who support you willingly, without coercion. They are not always available to offer assistance; they have their own concerns as well, but they could provide indirect access to their own Backgrounds such as Contacts, Influence, or Resources. However, nothing is free. If you draw on favors from your friends, they may ask for a favor in return. Allies dots may be pooled among a coterie of characters.",
@@ -2561,7 +2724,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     };
 
-// Clan & Bloodline Database
+    // Clan & Bloodline Database
     const clanDatabase = {
       "Assamite (Sorceror Caste)": {
         disciplines: ["Clan Sorcery", "Auspex", "Celerity"],
@@ -2874,7 +3037,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     };
 
     // Road & Path Database
-        const beastBaseEthics = [
+    const beastBaseEthics = [
       "- You have survived death, and now preservation of the self is the truest goal you can seek.",
       "- The Beast exists to help you survive, not as some manifestation of evil.",
       "- You have fought for everything you have, and have right to everything you’ve fought for.",
@@ -2924,7 +3087,6 @@ Nothing in this agreement limits our liability to you in the event of death or p
       "- Your heart holds your hunger and your freedom. Find the courage to embrace both."
     ];
 
-    // Comprehensive Roads & Paths Database
     const roadsDatabase = {
       "The Road of the Beast": {
         altName: "Via Bestiae",
@@ -3181,7 +3343,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
           1:  { mw: "Spending a night without human contact", r: "" }
         }
       },
-        "The Path of Community": {
+      "The Path of Community": {
         altName: "Via Humanitas",
         aura: "Humanity",
         virtues: { v1: "Conscience", v2: "Self-Control" },
@@ -4524,12 +4686,41 @@ Nothing in this agreement limits our liability to you in the event of death or p
       if (!listContainer) return;
       listContainer.innerHTML = '';
 
-      if (!list || list.length === 0) {
-        listContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #8c7e6e; font-style: italic;">No records found. Prepare a new character.</p>`;
-        return;
+      // Ensure Darpaek is loaded into localStorage as a fallback
+      if (!localStorage.getItem(DARPAEK_DATA.id)) {
+        localStorage.setItem(DARPAEK_DATA.id, JSON.stringify(DARPAEK_DATA));
       }
 
-      list.forEach(meta => {
+      // Filter Darpaek out of the input list if present so he is never duplicated
+      const userList = (list || []).filter(item => item.id !== DARPAEK_DATA.id);
+
+      // 1. Prepend Darpaek Featured Read-Only Card
+      const darpaekCard = document.createElement('div');
+      darpaekCard.className = 'char-card';
+      darpaekCard.innerHTML = `
+        <div class="char-card-meta">
+          <h3>${DARPAEK_DATA.meta.name}</h3>
+          <p><strong>Clan:</strong> ${DARPAEK_DATA.meta.clan}</p>
+          <p><strong>Road:</strong> ${DARPAEK_DATA.mechanics.roadName}</p>
+          <p style="font-size: 0.75rem; color: #8c7e6e; margin-top: 8px;">Featured Character (Read Only)</p>
+        </div>
+        <div class="char-card-actions">
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="openEditor('${DARPAEK_DATA.id}', true)">View</button>
+            <button type="button" class="btn btn-small btn-secondary" style="flex: 1; opacity: 0.5; cursor: not-allowed;" disabled>Edit</button>
+            <button type="button" class="btn btn-small btn-npc active" style="flex: 1; pointer-events: none;" disabled>NPC</button>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-secondary btn-small" style="flex: 1; opacity: 0.5; cursor: not-allowed;" disabled>Export</button>
+            <button type="button" class="btn btn-secondary btn-small" style="flex: 1; opacity: 0.5; cursor: not-allowed;" disabled>Clone</button>
+            <button type="button" class="btn btn-danger btn-small" style="flex: 1; opacity: 0.5; cursor: not-allowed;" disabled>Delete</button>
+          </div>
+        </div>
+      `;
+      listContainer.appendChild(darpaekCard);
+
+      // 2. Render user created cards
+      userList.forEach(meta => {
         const card = document.createElement('div');
         card.className = 'char-card';
         card.innerHTML = `
@@ -4592,6 +4783,11 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     function checkNpcAccess(id, callback) {
+      if (id === DARPAEK_DATA.id) {
+        callback();
+        return;
+      }
+
       let charData = null;
       try {
         charData = JSON.parse(localStorage.getItem(id));
@@ -4617,6 +4813,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     async function toggleNpc(id) {
+      if (id === DARPAEK_DATA.id) return;
+
       let charData = null;
       try {
         charData = JSON.parse(localStorage.getItem(id));
@@ -4751,11 +4949,16 @@ Nothing in this agreement limits our liability to you in the event of death or p
       switchTab('tab-page-1');
 
       let localData = null;
-      try {
-        const raw = localStorage.getItem(id);
-        if (raw) localData = JSON.parse(raw);
-      } catch(e) {
-        console.error("Error reading localStorage:", e);
+
+      if (id === DARPAEK_DATA.id) {
+        localData = DARPAEK_DATA;
+      } else {
+        try {
+          const raw = localStorage.getItem(id);
+          if (raw) localData = JSON.parse(raw);
+        } catch(e) {
+          console.error("Error reading localStorage:", e);
+        }
       }
 
       if (localData) {
@@ -4768,7 +4971,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
         }
       }
 
-      if (API_URL.includes("YOUR_DEPLOYED_URL_HERE")) return;
+      if (id === DARPAEK_DATA.id || API_URL.includes("YOUR_DEPLOYED_URL_HERE")) return;
 
       fetch(`${API_URL}?id=${id}`)
         .then(res => res.json())
@@ -4813,6 +5016,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     async function cloneCharacter(id) {
+      if (id === DARPAEK_DATA.id) return;
       setSaveStatus('Cloning...');
       let sourceData = null;
 
@@ -4849,6 +5053,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     async function deleteCharacter(id) {
+      if (id === DARPAEK_DATA.id) return;
       if (!confirm("Are you sure you want to permanently delete this character?")) return;
 
       const deletedIds = JSON.parse(localStorage.getItem('v20_da_deleted_ids') || '[]');
@@ -5325,10 +5530,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
     async function deleteCharacterImage() {
       if (!confirm("Are you sure you want to delete this portrait?")) return;
 
-      // Clear window active name tracker
       window.activeImageName = '';
 
-      // Completely remove image preview source
       const imgPreview = document.getElementById('vis-image-preview');
       if (imgPreview) {
         imgPreview.removeAttribute('src');
@@ -5341,10 +5544,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
       const delBtn = document.getElementById('vis-image-delete');
       if (delBtn) delBtn.style.display = 'none';
 
-      // Save character sheet updates to clear image references from Google Sheet
       queueAutoSave();
 
-      // Send request to Apps Script to delete the file physically from Google Drive
       if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE") && activeCharacterId) {
         try {
           await fetch(API_URL, {
@@ -5829,7 +6030,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
     }
 
     async function saveCurrentCharacter() {
-      if (!activeCharacterId || window.isReadOnlyMode) return;
+      if (!activeCharacterId || window.isReadOnlyMode || activeCharacterId === DARPAEK_DATA.id) return;
 
       const data = compileSheetData();
       
@@ -6661,11 +6862,12 @@ Nothing in this agreement limits our liability to you in the event of death or p
         const imgPreview = document.getElementById('vis-image-preview');
         const delBtn = document.getElementById('vis-image-delete');
         if (imgPreview && delBtn) {
-          /* Checks for valid imageName and image data before trying to load preview */
-          if (vis.imageName && vis.image && typeof vis.image === 'string' && vis.image.trim() !== '') {
+          if (vis.image && typeof vis.image === 'string' && vis.image.trim() !== '') {
             imgPreview.src = vis.image;
             imgPreview.style.display = 'block';
-            delBtn.style.display = 'inline-block';
+            if (!window.isReadOnlyMode) {
+              delBtn.style.display = 'inline-block';
+            }
           } else {
             imgPreview.src = '';
             imgPreview.style.display = 'none';
@@ -6691,7 +6893,12 @@ Nothing in this agreement limits our liability to you in the event of death or p
       const exportId = id || activeCharacterId;
       if (!exportId) return;
 
-      const charData = JSON.parse(localStorage.getItem(exportId));
+      let charData = null;
+      if (exportId === DARPAEK_DATA.id) {
+        charData = DARPAEK_DATA;
+      } else {
+        charData = JSON.parse(localStorage.getItem(exportId));
+      }
       if (!charData) return;
 
       const filename = `${charData.meta.name || 'Unnamed'}_V20DA_Aligned.json`;
