@@ -184,6 +184,30 @@
       text-shadow: 0 0 3px #ffffff;
     }
 
+    /* Lock Toggle Button Styling */
+    .btn-lock {
+      background-color: #3e3530;
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-lock:hover {
+      background-color: #524740;
+    }
+
+    .btn-lock.active {
+      background-color: #cc1111;
+      color: #ffffff;
+      border-color: #ff4d4d;
+      box-shadow: 0 0 10px #ff3333, 0 0 5px #ff6666;
+      font-weight: bold;
+      text-shadow: 0 0 3px #ffffff;
+    }
+    
     /* Path Filter Button Styling */
     .path-filter-btn {
       background-color: #3e3530;
@@ -4501,7 +4525,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     }
 
-    function saveLocalIndex(charId, name, clan, road, isNpc = false, npcPassword = '') {
+    function saveLocalIndex(charId, name, clan, road, isNpc = false, npcPassword = '', isLocked = false, lockPassword = '') {
       const list = getLocalIndex();
       const index = list.findIndex(item => item.id === charId);
       if (index !== -1) {
@@ -4510,9 +4534,11 @@ Nothing in this agreement limits our liability to you in the event of death or p
         list[index].road = road;
         list[index].isNpc = isNpc;
         list[index].npcPassword = npcPassword;
+        list[index].isLocked = isLocked;
+        list[index].lockPassword = lockPassword;
         list[index].lastSaved = Date.now();
       } else {
-        list.push({ id: charId, name, clan, road, isNpc, npcPassword, lastSaved: Date.now() });
+        list.push({ id: charId, name, clan, road, isNpc, npcPassword, isLocked, lockPassword, lastSaved: Date.now() });
       }
       localStorage.setItem('v20_da_characters_index', JSON.stringify(list));
     }
@@ -4534,7 +4560,10 @@ Nothing in this agreement limits our liability to you in the event of death or p
         card.className = 'char-card';
         card.innerHTML = `
           <div class="char-card-meta">
-            <h3>${meta.name || 'Unnamed Character'}</h3>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <h3 style="margin: 0 0 5px 0;">${meta.name || 'Unnamed Character'}</h3>
+              <button type="button" class="btn btn-lock ${meta.isLocked ? 'active' : ''}" onclick="toggleLock('${meta.id}')">Lock</button>
+            </div>
             <p><strong>Clan:</strong> ${meta.clan || 'Unknown'}</p>
             <p><strong>Road:</strong> ${meta.road || 'Unselected'}</p>
             <p style="font-size: 0.75rem; color: #8c7e6e; margin-top: 8px;">Saved: ${new Date(meta.lastSaved).toLocaleDateString()}</p>
@@ -4542,13 +4571,13 @@ Nothing in this agreement limits our liability to you in the event of death or p
           <div class="char-card-actions">
             <div style="display: flex; gap: 6px;">
               <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="openViewOnly('${meta.id}')">View</button>
-              <button type="button" class="btn btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { openEditor('${meta.id}', false); })">Edit</button>
+              <button type="button" class="btn btn-small" style="flex: 1;" onclick="checkCardAccess('${meta.id}', 'edit', function() { openEditor('${meta.id}', false); })">Edit</button>
               <button type="button" class="btn btn-small btn-npc ${meta.isNpc ? 'active' : ''}" style="flex: 1;" onclick="toggleNpc('${meta.id}')">NPC</button>
             </div>
             <div style="display: flex; gap: 6px;">
-              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { triggerManualExport('${meta.id}'); })">Export</button>
-              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { cloneCharacter('${meta.id}'); })">Clone</button>
-              <button type="button" class="btn btn-danger btn-small" style="flex: 1;" onclick="checkNpcAccess('${meta.id}', function() { deleteCharacter('${meta.id}'); })">Delete</button>
+              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkCardAccess('${meta.id}', 'export', function() { triggerManualExport('${meta.id}'); })">Export</button>
+              <button type="button" class="btn btn-secondary btn-small" style="flex: 1;" onclick="checkCardAccess('${meta.id}', 'clone', function() { cloneCharacter('${meta.id}'); })">Clone</button>
+              <button type="button" class="btn btn-danger btn-small" style="flex: 1;" onclick="checkCardAccess('${meta.id}', 'delete', function() { deleteCharacter('${meta.id}'); })">Delete</button>
             </div>
           </div>
         `;
@@ -4576,7 +4605,9 @@ Nothing in this agreement limits our liability to you in the event of death or p
                   return {
                     ...cloudItem,
                     isNpc: localItem.isNpc !== undefined ? localItem.isNpc : cloudItem.isNpc,
-                    npcPassword: localItem.npcPassword !== undefined ? localItem.npcPassword : cloudItem.npcPassword
+                    npcPassword: localItem.npcPassword !== undefined ? localItem.npcPassword : cloudItem.npcPassword,
+                    isLocked: localItem.isLocked !== undefined ? localItem.isLocked : cloudItem.isLocked,
+                    lockPassword: localItem.lockPassword !== undefined ? localItem.lockPassword : cloudItem.lockPassword
                   };
                 }
                 return cloudItem;
@@ -4591,29 +4622,90 @@ Nothing in this agreement limits our liability to you in the event of death or p
       }
     }
 
-    function checkNpcAccess(id, callback) {
+    function checkCardAccess(id, action, callback) {
       let charData = null;
       try {
         charData = JSON.parse(localStorage.getItem(id));
       } catch (e) {}
 
-      if (charData && charData.isNpc) {
+      if (!charData) {
+        callback();
+        return;
+      }
+
+      // Check NPC Password (applies to view, edit, export, clone, delete)
+      if (charData.isNpc) {
         const input = prompt("Enter NPC Password:");
         if (input === null) return;
-        if (input === (charData.npcPassword || "")) {
-          callback();
-        } else {
+        if (input !== (charData.npcPassword || "")) {
           alert("Incorrect NPC Password.");
+          return;
         }
-      } else {
-        callback();
       }
+
+      // Check Lock Password (applies to edit, export, clone, delete)
+      if (action !== 'view' && charData.isLocked) {
+        const input = prompt("Enter Lock Password:");
+        if (input === null) return;
+        if (input !== (charData.lockPassword || "")) {
+          alert("Incorrect Lock Password.");
+          return;
+        }
+      }
+
+      callback();
     }
 
     function openViewOnly(id) {
-      checkNpcAccess(id, function() {
+      checkCardAccess(id, 'view', function() {
         openEditor(id, true);
       });
+    }
+
+    async function toggleLock(id) {
+      let charData = null;
+      try {
+        charData = JSON.parse(localStorage.getItem(id));
+      } catch (e) {}
+
+      if (!charData) return;
+
+      if (!charData.isLocked) {
+        const password = prompt("Enter a password to Lock this character:");
+        if (password === null) return;
+        charData.isLocked = true;
+        charData.lockPassword = password;
+      } else {
+        const input = prompt("Enter the Lock Password to unlock:");
+        if (input === null) return;
+        if (input !== (charData.lockPassword || "")) {
+          alert("Incorrect Lock Password.");
+          return;
+        }
+        charData.isLocked = false;
+        charData.lockPassword = "";
+      }
+
+      localStorage.setItem(id, JSON.stringify(charData));
+      saveLocalIndex(
+        id, 
+        charData.meta ? charData.meta.name : '', 
+        charData.meta ? charData.meta.clan : '', 
+        charData.mechanics ? charData.mechanics.roadName : '', 
+        charData.isNpc || false, 
+        charData.npcPassword || '',
+        charData.isLocked,
+        charData.lockPassword
+      );
+
+      renderDashboardGrid(getLocalIndex());
+
+      if (!API_URL.includes("YOUR_DEPLOYED_URL_HERE")) {
+        fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(charData)
+        }).catch(err => console.warn("Background cloud Lock sync failed:", err));
+      }
     }
 
     async function toggleNpc(id) {
@@ -4666,6 +4758,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
         id: charId,
         isNpc: false,
         npcPassword: '',
+        isLocked: false,
+        lockPassword: '',
         meta: { name: 'New Character', clan: '', sire: '', generation: '12', nature: '', demeanor: '', concept: '', chronicle: '' },
         meta_notes_left: '',
         meta_notes_right: '',
@@ -4718,7 +4812,7 @@ Nothing in this agreement limits our liability to you in the event of death or p
       };
 
       localStorage.setItem(charId, JSON.stringify(initialSheet));
-      saveLocalIndex(charId, initialSheet.meta.name, initialSheet.meta.clan, '', false, '');
+      saveLocalIndex(charId, initialSheet.meta.name, initialSheet.meta.clan, '', false, '', false, '');
 
       openEditor(charId, false);
 
@@ -5815,6 +5909,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
     let activeIsNpc = false;
     let activeNpcPassword = '';
+    let activeIsLocked = false;
+    let activeLockPassword = '';
 
     function queueAutoSave() {
       if (isLoadingSheet || window.isReadOnlyMode) return; 
@@ -5869,6 +5965,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
         id: activeCharacterId,
         isNpc: activeIsNpc,
         npcPassword: activeNpcPassword,
+        isLocked: activeIsLocked,
+        lockPassword: activeLockPassword,
         meta: {
           name: document.getElementById('char-name').value,
           clan: document.getElementById('char-clan').value,
@@ -6174,6 +6272,8 @@ Nothing in this agreement limits our liability to you in the event of death or p
 
         activeIsNpc = data.isNpc || false;
         activeNpcPassword = data.npcPassword || '';
+        activeIsLocked = data.isLocked || false;
+        activeLockPassword = data.lockPassword || '';
 
         const npcIndicator = document.getElementById('sheet-npc-indicator');
         if (npcIndicator) {
